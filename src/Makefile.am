@@ -1,7 +1,7 @@
 # $Id$
 
 AM_CFLAGS = -W -Wall -Wextra -ansi
-AM_CXXFLAGS = -W -Wall -Wextra -ansi
+AM_CXXFLAGS = -W -Wall -Wextra -std=c++14
 
 noinst_LIBRARIES = liblogoparser.a
 

@@ -58,6 +58,7 @@
     std::string*		stringVal;
     class ArithNode*	node;
 }
+
 %define api.token.prefix {TOKEN_}
 
 %token			    END	     0	"end of file"
@@ -116,7 +117,7 @@ variable: STRING
 	        }
 	    }
 
-atomexpr : constant
+atomexpr: constant
         {
 	        $$ = $1;
 	    }
@@ -129,7 +130,7 @@ atomexpr : constant
 	        $$ = $2;
 	    }
 
-unaryexpr : atomexpr
+unaryexpr: atomexpr
         {
 		    $$ = $1;
 	    }
@@ -142,7 +143,7 @@ unaryexpr : atomexpr
 		    $$ = new NNegate($2);
 	    }
 
-mulexpr : unaryexpr
+mulexpr: unaryexpr
         {
 	        $$ = $1;
 	    }
@@ -155,7 +156,7 @@ mulexpr : unaryexpr
 	        $$ = new NDivide($1, $3);
 	    }
 
-addexpr : mulexpr
+addexpr: mulexpr
         {
 	        $$ = $1;
 	    }
@@ -168,12 +169,12 @@ addexpr : mulexpr
 	        $$ = new NSubtract($1, $3);
 	    }
 
-expr	: addexpr DOT
+expr: addexpr 
         {
 	        $$ = $1;
 	    }
 
-assignment : STRING EQ expr
+assignment: STRING EQ expr DOT
         {
 		    driver.calc.variables[*$1] = $3->evaluate();
 		    std::cout << "Setting variable " << *$1
@@ -182,9 +183,9 @@ assignment : STRING EQ expr
 		    delete $3;
 	    }
 
-start	: /* empty */
+start: /* empty file is valid aswell */
 	    | start assignment
-        | start expr
+        | start expr DOT
         {
 	      driver.calc.expressions.push_back($2);
 	    }

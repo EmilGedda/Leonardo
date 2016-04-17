@@ -17,9 +17,6 @@ typedef example::Parser::token_type token_type;
 
 /* This disables inclusion of unistd.h, which is not available under Visual C++
  * on Win32. The C++ scanner uses STL streams instead. */
-#include <iostream>
-using namespace std;
-#include <unistd.h>
 %}
 
 /*** Flex Declarations and Options ***/
@@ -62,6 +59,14 @@ using namespace std;
     return token::TOKEN_EQ;
 }
 
+"(" {
+    return token::TOKEN_LPAR;
+}
+
+")" {
+    return token::TOKEN_RPAR;
+}
+
 "." {
     return token::TOKEN_DOT;
 }
@@ -86,6 +91,9 @@ using namespace std;
     yylloc->step();
 }
 
+. {
+    return static_cast<token_type>(*yytext);
+}
 
 %% /*** Additional Code ***/
 

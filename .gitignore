@@ -1,0 +1,14 @@
+src/leonardo
+src/*.o
+src/Makefile
+src/Makefile.in
+src/.deps/
+autom4te.cache
+aclocal.m4
+autoscan.log
+config.log
+config.status
+configure
+configure.scan
+Makefile
+Makefile.in

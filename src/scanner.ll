@@ -4,7 +4,7 @@
 %{ /*** C/C++ Declarations ***/
 
 #include <string>
-
+#include <stdio.h>
 #include "scanner.h"
 
 /* import the parser's token type into a local typedef */
@@ -17,8 +17,9 @@ typedef example::Parser::token_type token_type;
 
 /* This disables inclusion of unistd.h, which is not available under Visual C++
  * on Win32. The C++ scanner uses STL streams instead. */
-#define YY_NO_UNISTD_H
-
+#include <iostream>
+using namespace std;
+#include <unistd.h>
 %}
 
 /*** Flex Declarations and Options ***/

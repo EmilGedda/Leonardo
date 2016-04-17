@@ -9,7 +9,7 @@
 
 namespace example {
 
-Driver::Driver(class CalcContext& _calc)
+Driver::Driver(class Context& _calc)
     : trace_scanning(false),
       trace_parsing(false),
       calc(_calc)

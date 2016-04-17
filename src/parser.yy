@@ -14,7 +14,7 @@
 /*** yacc/bison Declarations ***/
 
 /* Require bison 2.3 or later */
-%require "2.3"
+%require "3.0.4"
 
 /* add debug output code to generated parser. disable this for release
  * versions. */
@@ -57,7 +57,7 @@
     int  			integerVal;
     double 			doubleVal;
     std::string*		stringVal;
-    class CalcNode*		calcnode;
+    class ArithNode*		node;
 }
 
 %token			END	     0	"end of file"
@@ -66,12 +66,12 @@
 %token <doubleVal> 	DOUBLE		"double"
 %token <stringVal> 	STRING		"string"
 
-%type <calcnode>	constant variable
-%type <calcnode>	atomexpr powexpr unaryexpr mulexpr addexpr expr
+%type <node>	constant variable
+%type <node>	atomexpr unaryexpr mulexpr addexpr expr
 
 %destructor { delete $$; } STRING
 %destructor { delete $$; } constant variable
-%destructor { delete $$; } atomexpr powexpr unaryexpr mulexpr addexpr expr
+%destructor { delete $$; } atomexpr unaryexpr mulexpr addexpr expr
 
  /*** END EXAMPLE - Change the example grammar's tokens above ***/
 
@@ -94,11 +94,11 @@
 
 constant : INTEGER
            {
-	       $$ = new CNConstant($1);
+	       $$ = new NConstant($1);
 	   }
          | DOUBLE
            {
-	       $$ = new CNConstant($1);
+	       $$ = new NConstant($1);
 	   }
 
 variable : STRING
@@ -109,7 +109,7 @@ variable : STRING
 		   YYERROR;
 	       }
 	       else {
-		   $$ = new CNConstant( driver.calc.getVariable(*$1) );
+		   $$ = new NConstant( driver.calc.getVariable(*$1) );
 		   delete $1;
 	       }
 	   }
@@ -127,26 +127,17 @@ atomexpr : constant
 	       $$ = $2;
 	   }
 
-powexpr	: atomexpr
-          {
-	      $$ = $1;
-	  }
-        | atomexpr '^' powexpr
-          {
-	      $$ = new CNPower($1, $3);
-	  }
-
-unaryexpr : powexpr
+unaryexpr : atomexpr
             {
 		$$ = $1;
 	    }
-          | '+' powexpr
+          | '+' atomexpr
             {
 		$$ = $2;
 	    }
-          | '-' powexpr
+          | '-' atomexpr
             {
-		$$ = new CNNegate($2);
+		$$ = new NNegate($2);
 	    }
 
 mulexpr : unaryexpr
@@ -155,15 +146,11 @@ mulexpr : unaryexpr
 	  }
         | mulexpr '*' unaryexpr
           {
-	      $$ = new CNMultiply($1, $3);
+	      $$ = new NMultiply($1, $3);
 	  }
         | mulexpr '/' unaryexpr
           {
-	      $$ = new CNDivide($1, $3);
-	  }
-        | mulexpr '%' unaryexpr
-          {
-	      $$ = new CNModulo($1, $3);
+	      $$ = new NDivide($1, $3);
 	  }
 
 addexpr : mulexpr
@@ -172,11 +159,11 @@ addexpr : mulexpr
 	  }
         | addexpr '+' mulexpr
           {
-	      $$ = new CNAdd($1, $3);
+	      $$ = new NAdd($1, $3);
 	  }
         | addexpr '-' mulexpr
           {
-	      $$ = new CNSubtract($1, $3);
+	      $$ = new NSubtract($1, $3);
 	  }
 
 expr	: addexpr

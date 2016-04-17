@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[])
 {
-    CalcContext calc;
+    Context calc;
     example::Driver driver(calc);
     bool readfile = false;
 

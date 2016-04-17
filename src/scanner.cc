@@ -721,13 +721,12 @@ YY_RULE_SETUP
     yylloc->step();
 }
 	YY_BREAK
-/*** END EXAMPLE - Change the example lexer rules above ***/
 case 11:
 YY_RULE_SETUP
 #line 90 "scanner.ll"
 ECHO;
 	YY_BREAK
-#line 731 "scanner.cc"
+#line 730 "scanner.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

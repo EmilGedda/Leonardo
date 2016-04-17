@@ -77,7 +77,7 @@ using namespace std;
 }
 
  /* gobble up end-of-lines */
-"\n" {
+\n {
     yylloc->lines(yyleng); 
     yylloc->step();
 }
@@ -85,7 +85,7 @@ using namespace std;
 [ \t\r]+ {
     yylloc->step();
 }
- /*** END EXAMPLE - Change the example lexer rules above ***/
+
 
 %% /*** Additional Code ***/
 

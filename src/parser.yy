@@ -54,17 +54,24 @@
  /*** BEGIN EXAMPLE - Change the example grammar's tokens below ***/
 
 %union {
-    int  			integerVal;
-    double 			doubleVal;
+    int                 integerVal;
     std::string*		stringVal;
-    class ArithNode*		node;
+    class ArithNode*	node;
 }
+%define api.token.prefix {TOKEN_}
 
-%token			END	     0	"end of file"
-%token			EOL		"end of line"
-%token <integerVal> 	INTEGER		"integer"
-%token <doubleVal> 	DOUBLE		"double"
-%token <stringVal> 	STRING		"string"
+%token			    END	     0	"end of file"
+%token			    EOL		    "end of line"
+%token <integerVal> INTEGER		"integer"
+%token <stringVal>  STRING		"string"
+%token LPAR         "left parenthesis"
+%token RPAR         "right parenthesis"
+%token DOT          "dot"
+%token EQ           "equal sign"
+%token PLUS         "plus"
+%token MINUS        "minus"
+%token MUL          "multiplication"
+%token DIV          "division"
 
 %type <node>	constant variable
 %type <node>	atomexpr unaryexpr mulexpr addexpr expr
@@ -92,113 +99,96 @@
 
  /*** BEGIN EXAMPLE - Change the example grammar rules below ***/
 
-constant : INTEGER
-           {
+constant: INTEGER
+        {
 	       $$ = new NConstant($1);
-	   }
-         | DOUBLE
-           {
-	       $$ = new NConstant($1);
-	   }
+	    }
 
-variable : STRING
-           {
-	       if (!driver.calc.existsVariable(*$1)) {
-		   error(yyla.location, std::string("Unknown variable \"") + *$1 + "\"");
-		   delete $1;
-		   YYERROR;
-	       }
-	       else {
-		   $$ = new NConstant( driver.calc.getVariable(*$1) );
-		   delete $1;
-	       }
-	   }
+variable: STRING
+        {
+	        if (!driver.calc.existsVariable(*$1)) {
+		        error(yyla.location, std::string("Unknown variable \"") + *$1 + "\"");
+		        delete $1;
+		        YYERROR;
+	        } else {
+		        $$ = new NConstant( driver.calc.getVariable(*$1) );
+		        delete $1;
+	        }
+	    }
 
 atomexpr : constant
-           {
-	       $$ = $1;
-	   }
-         | variable
-           {
-	       $$ = $1;
-	   }
-         | '(' expr ')'
-           {
-	       $$ = $2;
-	   }
+        {
+	        $$ = $1;
+	    }
+        | variable
+        {
+	        $$ = $1;
+	    }
+        | LPAR expr RPAR
+        {
+	        $$ = $2;
+	    }
 
 unaryexpr : atomexpr
-            {
-		$$ = $1;
+        {
+		    $$ = $1;
 	    }
-          | '+' atomexpr
-            {
-		$$ = $2;
+        | PLUS atomexpr
+        {
+		    $$ = $2;
 	    }
-          | '-' atomexpr
-            {
-		$$ = new NNegate($2);
+        | MINUS atomexpr
+        {
+		    $$ = new NNegate($2);
 	    }
 
 mulexpr : unaryexpr
-          {
-	      $$ = $1;
-	  }
-        | mulexpr '*' unaryexpr
-          {
-	      $$ = new NMultiply($1, $3);
-	  }
-        | mulexpr '/' unaryexpr
-          {
-	      $$ = new NDivide($1, $3);
-	  }
+        {
+	        $$ = $1;
+	    }
+        | mulexpr MUL unaryexpr
+        {
+	        $$ = new NMultiply($1, $3);
+	    }
+        | mulexpr DIV unaryexpr
+        {
+	        $$ = new NDivide($1, $3);
+	    }
 
 addexpr : mulexpr
-          {
-	      $$ = $1;
-	  }
-        | addexpr '+' mulexpr
-          {
-	      $$ = new NAdd($1, $3);
-	  }
-        | addexpr '-' mulexpr
-          {
-	      $$ = new NSubtract($1, $3);
-	  }
+        {
+	        $$ = $1;
+	    }
+        | addexpr PLUS mulexpr
+        {
+	        $$ = new NAdd($1, $3);
+	    }
+        | addexpr MINUS mulexpr
+        {
+	        $$ = new NSubtract($1, $3);
+	    }
 
-expr	: addexpr
-          {
-	      $$ = $1;
-	  }
+expr	: addexpr DOT
+        {
+	        $$ = $1;
+	    }
 
-assignment : STRING '=' expr
-             {
-		 driver.calc.variables[*$1] = $3->evaluate();
-		 std::cout << "Setting variable " << *$1
+assignment : STRING EQ expr
+        {
+		    driver.calc.variables[*$1] = $3->evaluate();
+		    std::cout << "Setting variable " << *$1
 			   << " = " << driver.calc.variables[*$1] << "\n";
-		 delete $1;
-		 delete $3;
-	     }
+		    delete $1;
+		    delete $3;
+	    }
 
 start	: /* empty */
-        | start ';'
-        | start EOL
-	| start assignment ';'
-	| start assignment EOL
-	| start assignment END
-        | start expr ';'
-          {
+	    | start assignment
+        | start expr
+        {
 	      driver.calc.expressions.push_back($2);
-	  }
-        | start expr EOL
-          {
-	      driver.calc.expressions.push_back($2);
-	  }
-        | start expr END
-          {
-	      driver.calc.expressions.push_back($2);
-	  }
-
+	    }
+        
  /*** END EXAMPLE - Change the example grammar rules above ***/
 
 %% /*** Additional Code ***/

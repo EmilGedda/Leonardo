@@ -126,12 +126,11 @@ namespace example {
     {
     #line 56 "parser.yy" // lalr1.cc:377
 
-    int  			integerVal;
-    double 			doubleVal;
+    int                 integerVal;
     std::string*		stringVal;
-    class ArithNode*		node;
+    class ArithNode*	node;
 
-#line 135 "parser.h" // lalr1.cc:377
+#line 134 "parser.h" // lalr1.cc:377
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -151,11 +150,18 @@ namespace example {
     {
       enum yytokentype
       {
-        END = 0,
-        EOL = 258,
-        INTEGER = 259,
-        DOUBLE = 260,
-        STRING = 261
+        TOKEN_END = 0,
+        TOKEN_EOL = 258,
+        TOKEN_INTEGER = 259,
+        TOKEN_STRING = 260,
+        TOKEN_LPAR = 261,
+        TOKEN_RPAR = 262,
+        TOKEN_DOT = 263,
+        TOKEN_EQ = 264,
+        TOKEN_PLUS = 265,
+        TOKEN_MINUS = 266,
+        TOKEN_MUL = 267,
+        TOKEN_DIV = 268
       };
     };
 
@@ -463,12 +469,12 @@ namespace example {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 40,     ///< Last index in yytable_.
+      yylast_ = 30,     ///< Last index in yytable_.
       yynnts_ = 10,  ///< Number of nonterminal symbols.
       yyfinal_ = 2, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 15  ///< Number of tokens.
+      yyntokens_ = 14  ///< Number of tokens.
     };
 
 
@@ -479,7 +485,7 @@ namespace example {
 
 
 } // example
-#line 483 "parser.h" // lalr1.cc:377
+#line 489 "parser.h" // lalr1.cc:377
 
 
 

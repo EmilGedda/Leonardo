@@ -13,7 +13,7 @@ typedef example::Parser::token_type token_type;
 
 /* By default yylex returns int, we use token_type. Unfortunately yyterminate
  * by default returns 0, which is not of token_type. */
-#define yyterminate() return token::END
+#define yyterminate() return token::TOKEN_END
 
 /* This disables inclusion of unistd.h, which is not available under Visual C++
  * on Win32. The C++ scanner uses STL streams instead. */
@@ -30,19 +30,6 @@ using namespace std;
 /* change the name of the scanner class. results in "ExampleFlexLexer" */
 %option prefix="Example"
 
-/* the manual says "somewhat more optimized" */
-%option batch
-
-/* enable scanner to generate debug output. disable this for release
- * versions. */
-%option debug
-
-/* no support for include files is planned */
-%option yywrap nounput 
-
-/* enables the use of start condition stacks */
-%option stack
-
 /* The following paragraph suffices to track locations accurately. Each time
  * yylex is invoked, the begin position is moved onto the end position. */
 %{
@@ -52,44 +39,52 @@ using namespace std;
 %% /*** Regular Expressions Part ***/
 
  /* code to place at the beginning of yylex() */
-%{
-    // reset location
-    yylloc->step();
-%}
+
 
  /*** BEGIN EXAMPLE - Change the example lexer rules below ***/
+"+" {
+    return token::TOKEN_PLUS;
+}
+
+"-" {
+    return token::TOKEN_MINUS;
+}
+
+"*" {
+    return token::TOKEN_MUL;
+}
+
+"/" {
+    return token::TOKEN_DIV;
+}
+
+"=" {
+    return token::TOKEN_EQ;
+}
+
+"." {
+    return token::TOKEN_DOT;
+}
 
 [0-9]+ {
     yylval->integerVal = atoi(yytext);
-    return token::INTEGER;
+    return token::TOKEN_INTEGER;
 }
 
-[0-9]+"."[0-9]* {
-    yylval->doubleVal = atof(yytext);
-    return token::DOUBLE;
-}
-
-[A-Za-z][A-Za-z0-9_,.-]* {
+[A-Za-z][A-Za-z0-9_]* {
     yylval->stringVal = new std::string(yytext, yyleng);
-    return token::STRING;
+    return token::TOKEN_STRING;
 }
 
+ /* gobble up end-of-lines */
+"\n" {
+    yylloc->lines(yyleng); 
+    yylloc->step();
+}
  /* gobble up white-spaces */
 [ \t\r]+ {
     yylloc->step();
 }
-
- /* gobble up end-of-lines */
-\n {
-    yylloc->lines(yyleng); yylloc->step();
-    return token::EOL;
-}
-
- /* pass all other characters up to bison */
-. {
-    return static_cast<token_type>(*yytext);
-}
-
  /*** END EXAMPLE - Change the example lexer rules above ***/
 
 %% /*** Additional Code ***/

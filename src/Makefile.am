@@ -6,13 +6,13 @@ AM_CXXFLAGS = -W -Wall -Wextra -std=c++14
 noinst_LIBRARIES = liblogoparser.a
 
 liblogoparser_a_SOURCES = \
-	parser.yy scanner.ll parser.h scanner.h y.tab.h \
+	parser.yy scanner.ll parser.hpp scanner.hpp y.tab.hpp \
 	location.hh position.hh stack.hh FlexLexer.h \
-	driver.cc driver.h expression.h
+	driver.cpp driver.hpp expression.hpp
 
 bin_PROGRAMS = leonardo
 
-leonardo_SOURCES = exprtest.cc
+leonardo_SOURCES = main.cpp
 leonardo_DEPENDENCIES = liblogoparser.a
 
 LIBS = liblogoparser.a
@@ -22,6 +22,6 @@ LIBS = liblogoparser.a
 AM_LFLAGS = -olex.yy.c
 
 extraclean:
-	rm -f parser.cc parser.h scanner.cc
+	rm -f parser.cc parser.hpp scanner.cc
 
 rebuild: clean extraclean all

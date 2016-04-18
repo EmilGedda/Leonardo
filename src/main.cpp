@@ -3,8 +3,8 @@
 #include <iostream>
 #include <fstream>
 
-#include "driver.h"
-#include "expression.h"
+#include "driver.hpp"
+#include "expression.hpp"
 
 int main(int argc, char *argv[])
 {

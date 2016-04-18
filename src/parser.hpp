@@ -31,14 +31,14 @@
 // version 2.2 of Bison.
 
 /**
- ** \file parser.h
+ ** \file parser.hpp
  ** Define the example::parser class.
  */
 
 // C++ LALR(1) parser skeleton written by Akim Demaille.
 
-#ifndef YY_EXAMPLE_PARSER_H_INCLUDED
-# define YY_EXAMPLE_PARSER_H_INCLUDED
+#ifndef YY_EXAMPLE_PARSER_HPP_INCLUDED
+# define YY_EXAMPLE_PARSER_HPP_INCLUDED
 
 
 # include <cstdlib> // std::abort
@@ -110,7 +110,7 @@
 
 
 namespace example {
-#line 114 "parser.h" // lalr1.cc:377
+#line 114 "parser.hpp" // lalr1.cc:377
 
 
 
@@ -130,7 +130,7 @@ namespace example {
     std::string*		stringVal;
     class ArithNode*	node;
 
-#line 134 "parser.h" // lalr1.cc:377
+#line 134 "parser.hpp" // lalr1.cc:377
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -485,9 +485,9 @@ namespace example {
 
 
 } // example
-#line 489 "parser.h" // lalr1.cc:377
+#line 489 "parser.hpp" // lalr1.cc:377
 
 
 
 
-#endif // !YY_EXAMPLE_PARSER_H_INCLUDED
+#endif // !YY_EXAMPLE_PARSER_HPP_INCLUDED

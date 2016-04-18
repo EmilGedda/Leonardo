@@ -5,7 +5,7 @@
 
 #include <string>
 #include <stdio.h>
-#include "scanner.h"
+#include "scanner.hpp"
 
 /* import the parser's token type into a local typedef */
 typedef example::Parser::token token;

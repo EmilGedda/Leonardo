@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#include "expression.h"
+#include "expression.hpp"
 
 %}
 
@@ -51,7 +51,6 @@
 /* verbose error messages */
 %error-verbose
 
- /*** BEGIN EXAMPLE - Change the example grammar's tokens below ***/
 
 %union {
     int                 integerVal;
@@ -81,12 +80,10 @@
 %destructor { delete $$; } constant variable
 %destructor { delete $$; } atomexpr unaryexpr mulexpr addexpr expr
 
- /*** END EXAMPLE - Change the example grammar's tokens above ***/
-
 %{
 
-#include "driver.h"
-#include "scanner.h"
+#include "driver.hpp"
+#include "scanner.hpp"
 
 /* this "connects" the bison parser in the driver to the flex scanner class
  * object. it defines the yylex() function call to pull the next token from the
@@ -98,8 +95,6 @@
 
 %% /*** Grammar Rules ***/
 
- /*** BEGIN EXAMPLE - Change the example grammar rules below ***/
-
 constant: INTEGER
         {
 	       $$ = new NConstant($1);
@@ -108,11 +103,11 @@ constant: INTEGER
 variable: STRING
         {
 	        if (!driver.calc.existsVariable(*$1)) {
-		        error(yyla.location, std::string("Unknown variable \"") + *$1 + "\"");
+		        error(yyla.location, "Unknown variable \"" + *$1 + "\"");
 		        delete $1;
 		        YYERROR;
 	        } else {
-		        $$ = new NConstant( driver.calc.getVariable(*$1) );
+		        $$ = new NConstant(driver.calc.getVariable(*$1));
 		        delete $1;
 	        }
 	    }

@@ -41,7 +41,7 @@
 #include <string>
 #include <vector>
 
-#include "expression.h"
+#include "expression.hpp"
 
 
 #line 48 "parser.cc" // lalr1.cc:404
@@ -54,14 +54,14 @@
 #  endif
 # endif
 
-#include "parser.h"
+#include "parser.hpp"
 
 // User implementation prologue.
 #line 86 "parser.yy" // lalr1.cc:412
 
 
-#include "driver.h"
-#include "scanner.h"
+#include "driver.hpp"
+#include "scanner.hpp"
 
 /* this "connects" the bison parser in the driver to the flex scanner class
  * object. it defines the yylex() function call to pull the next token from the

@@ -124,7 +124,7 @@ namespace example {
     /// Symbol semantic values.
     union semantic_type
     {
-    #line 56 "parser.yy" // lalr1.cc:377
+    #line 55 "parser.yy" // lalr1.cc:377
 
     int                 integerVal;
     std::string*		stringVal;

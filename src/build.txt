@@ -1,0 +1,2 @@
+bison -o parser.cc --defines=parser.hpp parser.yy
+flex -i -o scanner.cc scanner.ll

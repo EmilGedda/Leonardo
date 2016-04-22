@@ -57,7 +57,7 @@
 #include "parser.hpp"
 
 // User implementation prologue.
-#line 86 "parser.yy" // lalr1.cc:412
+#line 83 "parser.yy" // lalr1.cc:412
 
 
 #include "driver.hpp"
@@ -407,56 +407,56 @@ namespace example {
     {
             case 5: // "string"
 
-#line 80 "parser.yy" // lalr1.cc:614
+#line 79 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.stringVal); }
 #line 413 "parser.cc" // lalr1.cc:614
         break;
 
       case 15: // constant
 
-#line 81 "parser.yy" // lalr1.cc:614
+#line 80 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.node); }
 #line 420 "parser.cc" // lalr1.cc:614
         break;
 
       case 16: // variable
 
-#line 81 "parser.yy" // lalr1.cc:614
+#line 80 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.node); }
 #line 427 "parser.cc" // lalr1.cc:614
         break;
 
       case 17: // atomexpr
 
-#line 82 "parser.yy" // lalr1.cc:614
+#line 81 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.node); }
 #line 434 "parser.cc" // lalr1.cc:614
         break;
 
       case 18: // unaryexpr
 
-#line 82 "parser.yy" // lalr1.cc:614
+#line 81 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.node); }
 #line 441 "parser.cc" // lalr1.cc:614
         break;
 
       case 19: // mulexpr
 
-#line 82 "parser.yy" // lalr1.cc:614
+#line 81 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.node); }
 #line 448 "parser.cc" // lalr1.cc:614
         break;
 
       case 20: // addexpr
 
-#line 82 "parser.yy" // lalr1.cc:614
+#line 81 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.node); }
 #line 455 "parser.cc" // lalr1.cc:614
         break;
 
       case 21: // expr
 
-#line 82 "parser.yy" // lalr1.cc:614
+#line 81 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.node); }
 #line 462 "parser.cc" // lalr1.cc:614
         break;
@@ -704,7 +704,7 @@ namespace example {
           switch (yyn)
             {
   case 2:
-#line 104 "parser.yy" // lalr1.cc:859
+#line 99 "parser.yy" // lalr1.cc:859
     {
 	       (yylhs.value.node) = new NConstant((yystack_[0].value.integerVal));
 	    }
@@ -712,14 +712,14 @@ namespace example {
     break;
 
   case 3:
-#line 109 "parser.yy" // lalr1.cc:859
+#line 104 "parser.yy" // lalr1.cc:859
     {
 	        if (!driver.calc.existsVariable(*(yystack_[0].value.stringVal))) {
-		        error(yyla.location, std::string("Unknown variable \"") + *(yystack_[0].value.stringVal) + "\"");
+		        error(yyla.location, "Unknown variable \"" + *(yystack_[0].value.stringVal) + "\"");
 		        delete (yystack_[0].value.stringVal);
 		        YYERROR;
 	        } else {
-		        (yylhs.value.node) = new NConstant( driver.calc.getVariable(*(yystack_[0].value.stringVal)) );
+		        (yylhs.value.node) = new NConstant(driver.calc.getVariable(*(yystack_[0].value.stringVal)));
 		        delete (yystack_[0].value.stringVal);
 	        }
 	    }
@@ -727,7 +727,7 @@ namespace example {
     break;
 
   case 4:
-#line 121 "parser.yy" // lalr1.cc:859
+#line 116 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = (yystack_[0].value.node);
 	    }
@@ -735,7 +735,7 @@ namespace example {
     break;
 
   case 5:
-#line 125 "parser.yy" // lalr1.cc:859
+#line 120 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = (yystack_[0].value.node);
 	    }
@@ -743,7 +743,7 @@ namespace example {
     break;
 
   case 6:
-#line 129 "parser.yy" // lalr1.cc:859
+#line 124 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = (yystack_[1].value.node);
 	    }
@@ -751,7 +751,7 @@ namespace example {
     break;
 
   case 7:
-#line 134 "parser.yy" // lalr1.cc:859
+#line 129 "parser.yy" // lalr1.cc:859
     {
 		    (yylhs.value.node) = (yystack_[0].value.node);
 	    }
@@ -759,7 +759,7 @@ namespace example {
     break;
 
   case 8:
-#line 138 "parser.yy" // lalr1.cc:859
+#line 133 "parser.yy" // lalr1.cc:859
     {
 		    (yylhs.value.node) = (yystack_[0].value.node);
 	    }
@@ -767,7 +767,7 @@ namespace example {
     break;
 
   case 9:
-#line 142 "parser.yy" // lalr1.cc:859
+#line 137 "parser.yy" // lalr1.cc:859
     {
 		    (yylhs.value.node) = new NNegate((yystack_[0].value.node));
 	    }
@@ -775,7 +775,7 @@ namespace example {
     break;
 
   case 10:
-#line 147 "parser.yy" // lalr1.cc:859
+#line 142 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = (yystack_[0].value.node);
 	    }
@@ -783,7 +783,7 @@ namespace example {
     break;
 
   case 11:
-#line 151 "parser.yy" // lalr1.cc:859
+#line 146 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = new NMultiply((yystack_[2].value.node), (yystack_[0].value.node));
 	    }
@@ -791,7 +791,7 @@ namespace example {
     break;
 
   case 12:
-#line 155 "parser.yy" // lalr1.cc:859
+#line 150 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = new NDivide((yystack_[2].value.node), (yystack_[0].value.node));
 	    }
@@ -799,7 +799,7 @@ namespace example {
     break;
 
   case 13:
-#line 160 "parser.yy" // lalr1.cc:859
+#line 155 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = (yystack_[0].value.node);
 	    }
@@ -807,7 +807,7 @@ namespace example {
     break;
 
   case 14:
-#line 164 "parser.yy" // lalr1.cc:859
+#line 159 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = new NAdd((yystack_[2].value.node), (yystack_[0].value.node));
 	    }
@@ -815,7 +815,7 @@ namespace example {
     break;
 
   case 15:
-#line 168 "parser.yy" // lalr1.cc:859
+#line 163 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = new NSubtract((yystack_[2].value.node), (yystack_[0].value.node));
 	    }
@@ -823,7 +823,7 @@ namespace example {
     break;
 
   case 16:
-#line 173 "parser.yy" // lalr1.cc:859
+#line 168 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = (yystack_[0].value.node);
 	    }
@@ -831,7 +831,7 @@ namespace example {
     break;
 
   case 17:
-#line 178 "parser.yy" // lalr1.cc:859
+#line 173 "parser.yy" // lalr1.cc:859
     {
 		    driver.calc.variables[*(yystack_[3].value.stringVal)] = (yystack_[1].value.node)->evaluate();
 		    std::cout << "Setting variable " << *(yystack_[3].value.stringVal)
@@ -843,7 +843,7 @@ namespace example {
     break;
 
   case 20:
-#line 189 "parser.yy" // lalr1.cc:859
+#line 184 "parser.yy" // lalr1.cc:859
     {
 	      driver.calc.expressions.push_back((yystack_[1].value.node));
 	    }
@@ -1202,9 +1202,9 @@ namespace example {
   const unsigned char
   Parser::yyrline_[] =
   {
-       0,   103,   103,   108,   120,   124,   128,   133,   137,   141,
-     146,   150,   154,   159,   163,   167,   172,   177,   186,   187,
-     188
+       0,    98,    98,   103,   115,   119,   123,   128,   132,   136,
+     141,   145,   149,   154,   158,   162,   167,   172,   181,   182,
+     183
   };
 
   // Print the state stack on the debug stream.
@@ -1287,7 +1287,7 @@ namespace example {
 
 } // example
 #line 1290 "parser.cc" // lalr1.cc:1167
-#line 195 "parser.yy" // lalr1.cc:1168
+#line 190 "parser.yy" // lalr1.cc:1168
  /*** Additional Code ***/
 
 void example::Parser::error(const Parser::location_type& l,

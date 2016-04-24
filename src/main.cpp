@@ -6,12 +6,12 @@
 #include "driver.hpp"
 #include "expressions/expression.hpp"
 #include "turtle/turtle.hpp"
-#include "writers/default.hpp"
+#include "writers/svg.hpp"
 #include "context.hpp"
 
 int main(int argc, char *argv[])
 {
-  std::unique_ptr<Writer> writer(new Default());
+  std::unique_ptr<Writer> writer(new SVG());
   Context ctx(std::move(writer));
 
   example::Driver driver(ctx);

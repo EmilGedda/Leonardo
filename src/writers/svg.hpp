@@ -2,21 +2,28 @@
 #define SVG_HPP
 
 #include "../writer.hpp"
+#include <vector>
 
 class SVG final : public Writer {
 
 private:
   int padding;
-  int min_x = 0;
-  int min_y = 0;
-  int max_x = 0;
-  int max_y = 0;
+  double min_x = 0;
+  double min_y = 0;
+  double max_x = 0;
+  double max_y = 0;
 
+  std::vector<std::string> lines;
+
+  void init();
+  void finalize();
+  std::string to_str(double val);
 public:
-  ~SVG() { }
-  SVG(int padding = 0) : Writer(), padding(padding) {}
+
+  ~SVG() { finalize(); }
+  SVG(int padding = 0) : Writer(), padding(padding) { init(); }
   SVG(std::ostream& output, int padding = 0)
-    : Writer(output), padding(padding) {}
+    : Writer(output), padding(padding) { init(); }
 
   void draw_line(std::string color, double from_x,
       double from_y, double to_x, double to_y) override;

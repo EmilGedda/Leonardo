@@ -231,7 +231,7 @@ stmt: REP expr
             /* TODO: Fix mem-leak */
 	    }
 
-repcont: QUOTE start QUOTE
+repcont: QUOTE block QUOTE
         {
         
         }
@@ -240,11 +240,18 @@ repcont: QUOTE start QUOTE
             driver.ctx.ast.top()->add($1);
         }
 
-start: /* empty file is valid aswell */
-        | start stmt
+
+block: block stmt
         {
 	        driver.ctx.ast.top()->add($2);
 	    }
+        | stmt
+        {
+	        driver.ctx.ast.top()->add($1);
+	    }
+
+start: /* empty file is valid aswell */
+        | block 
         
  /*** END EXAMPLE - Change the example grammar rules above ***/
 

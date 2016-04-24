@@ -1,0 +1,9 @@
+down.
+turn = 1.
+speed = 1.
+rep (turn+2*speed)*(10/turn-1) "
+  left turn.
+  forw speed.
+  speed=speed*11/10+10/turn.
+  turn=turn+3.
+"

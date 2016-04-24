@@ -12,7 +12,7 @@ liblogoparser_a_SOURCES = \
 	expressions/statement/stleft.hpp expressions/statement/stpen.hpp \
 	expressions/statement/stcolor.hpp expressions/statement/strep.hpp \
 	expressions/statement.hpp expressions/statement/stassignment.hpp \
-	driver.cpp driver.hpp expressions/expression.hpp writer.hpp writers/default.cpp
+	driver.cpp driver.hpp expressions/expression.hpp writer.hpp writers/svg.cpp
 
 bin_PROGRAMS = leonardo
 

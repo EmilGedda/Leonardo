@@ -9,10 +9,10 @@
 
 namespace example {
 
-Driver::Driver(class Context& _calc)
+Driver::Driver(class Context& ctx)
     : trace_scanning(false),
       trace_parsing(false),
-      calc(_calc)
+      ctx(ctx)
 {
 }
 

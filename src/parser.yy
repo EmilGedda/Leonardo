@@ -12,6 +12,9 @@
 #include "expressions/statement/stforw.hpp"
 #include "expressions/statement/stpen.hpp"
 #include "expressions/statement/stleft.hpp"
+#include "expressions/statement/stcolor.hpp"
+#include "expressions/statement/strep.hpp"
+
 %}
 
 /*** yacc/bison Declarations ***/
@@ -59,6 +62,7 @@
     int                 integerVal;
     std::string*		stringVal;
     class ArithNode*	node;
+    class Statement*    statement;
 }
 
 %define api.token.prefix {TOKEN_}
@@ -86,12 +90,14 @@
 %token COLOR        "color"
 %token REP          "rep"
 %token QUOTE        "\""
-%token HEX          "hexcode"
 
+%token <stringVal>  HEX "hexcode"
+
+%type <statement> stmt
 %type <node>	constant variable
 %type <node>	atomexpr unaryexpr mulexpr addexpr expr
 
-%destructor { delete $$; } STRING
+%destructor { delete $$; } STRING HEX
 %destructor { delete $$; } constant variable
 %destructor { delete $$; } atomexpr unaryexpr mulexpr addexpr expr
 
@@ -112,19 +118,13 @@
 
 constant: INTEGER
         {
-	       $$ = new NConstant($1);
+	        $$ = new NConstant($1);
 	    }
 
 variable: STRING
         {
-	        if (!driver.calc.variable_exists(*$1)) {
-		        error(yyla.location, "Unknown variable \"" + *$1 + "\"");
-		        delete $1;
-		        YYERROR;
-	        } else {
-		        $$ = new NVariable(*$1, driver.calc);
-		        delete $1;
-	        }
+            $$ = new NVariable(*$1, driver.ctx);
+            delete $1;
 	    }
 
 atomexpr: constant
@@ -184,58 +184,66 @@ expr: addexpr
 	        $$ = $1;
 	    }
 
-stmt: /*REP INTEGER repcont
+stmt: REP expr 
         {
-
+            driver.ctx.ast.push(new AST());
+        } repcont
+        {
+            auto s = driver.ctx.ast.top();
+            driver.ctx.ast.pop();
+            $$ = new STRep($2, s);
         }
-        |*/ FORW INTEGER DOT
+        | FORW expr DOT
         {
-            driver.calc.statements.top()->push_back(new STForw($2));
+            $$ = new STForw($2);
         }
-        | BACK INTEGER DOT
+        | BACK expr DOT
         {
-            driver.calc.statements.top()->push_back(new STForw(-1 * $2));
+            $$ = new STForw(new NNegate($2));
         }
         | DOWN DOT
         {
-            driver.calc.statements.top()->push_back(new STPen(1));
+            $$ = new STPen(1);
         }
         | UP DOT
         {
-            driver.calc.statements.top()->push_back(new STPen(0));
+            $$ = new STPen(0);
         }
-        | LEFT INTEGER DOT
+        | LEFT expr DOT
         {
-            driver.calc.statements.top()->push_back(new STLeft($2));
+            $$ = new STLeft($2);
         }
-        | RIGHT INTEGER DOT
+        | RIGHT expr DOT
         {
-            driver.calc.statements.top()->push_back(new STLeft(-1 * $2));
+            $$ = new STLeft(new NNegate($2));
         }
-/*
-repcont: QUOTE start QUOTE
+        | COLOR HEX DOT
         {
-
+            $$ = new STColor(*$2);
+            delete $2;
         }
-        | stmt 
-        {
-
-        }
-*/
-assignment: STRING EQ expr DOT
+        | STRING EQ expr DOT
         {
             /* SEGFAULT SWAMP */
             std::unique_ptr<ArithNode> node($3);
-            driver.calc.statements.top()->push_back(new STAssignment(*$1, std::move(node)));
+            $$ = new STAssignment(*$1, std::move(node));
             delete $1; /* Possible?  */
             /* TODO: Fix mem-leak */
 	    }
 
+repcont: QUOTE start QUOTE
+        {
+        
+        }
+        | stmt 
+        {
+            driver.ctx.ast.top()->add($1);
+        }
+
 start: /* empty file is valid aswell */
-	    | start assignment
         | start stmt
         {
-	      /*driver.calc.statements.push_back($2);*/
+	        driver.ctx.ast.top()->add($2);
 	    }
         
  /*** END EXAMPLE - Change the example grammar rules above ***/

@@ -43,6 +43,7 @@ typedef example::Parser::token_type token_type;
 "%".* {
     yylloc->step();
 }
+
 "FORW" {
     return token::TOKEN_FORW;
 }
@@ -75,8 +76,13 @@ typedef example::Parser::token_type token_type;
     return token::TOKEN_REP;
 }
 
-"#"[0-9A-F]{6} {
+"\"" {
     return token::TOKEN_QUOTE;
+}
+
+"#"[0-9A-F]{6} {
+    yylval->stringVal = new std::string(yytext, yyleng);
+    return token::TOKEN_HEX;
 }
 
 "+" {

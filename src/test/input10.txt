@@ -1,0 +1,12 @@
+% Nästlad loop 1
+REP 2 "UP. FORW 10. DOWN. REP 3 "LEFT 120. FORW 1.""
+% Nästlad loop 2
+REP 3 "REP 2 "RIGHT 2. FORW 1."
+       COLOR #FF0000. FORW 10. COLOR #0000FF."
+% COLOR #000000. % Bortkommenterat färgbyte
+BACK 10.
+% Upper/lower case ignoreras
+% Detta gäller även hex-tecknen A-F i färgerna i utdata,
+% det spelar ingen roll om du använder stora eller små
+% bokstäver eller en blandning.
+color #AbcdEF. left 70. foRW 10.

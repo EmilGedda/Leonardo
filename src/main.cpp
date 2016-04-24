@@ -36,13 +36,13 @@ int main(int argc, char *argv[])
         return 0;
       }
 
-      ctx.clear_expressions();
+      //ctx.clear_expressions();
       bool result = driver.parse_stream(infile, argv[ai]);
       if (result)
       {
 
-        for(auto& s: *ctx.statements.top())
-          s->execute(ctx);
+        auto s = ctx.ast.top();
+        s->execute(ctx);
       }
 
       readfile = true;
@@ -50,7 +50,5 @@ int main(int argc, char *argv[])
   }
 
   if (readfile) return 0;
-
-  std::cout << "Reading expressions from stdin" << std::endl;
 
 }

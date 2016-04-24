@@ -11,14 +11,14 @@
 
 class STForw : public Statement {
 private:
-  int steps;
+  ArithNode* steps;
 
 public:
-  explicit STForw(int steps) : steps(steps) { }
+  explicit STForw(ArithNode* steps) : steps(steps) { }
 
   void execute(Context& ctx) const
   {
-    ctx.turtle().forward(steps);
+    ctx.turtle().forward(steps->evaluate());
   }
 
 };

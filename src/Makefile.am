@@ -7,8 +7,10 @@ noinst_LIBRARIES = liblogoparser.a
 
 liblogoparser_a_SOURCES = \
 	parser.yy scanner.ll parser.hpp scanner.hpp y.tab.hpp \
-	location.hh position.hh stack.hh FlexLexer.h \
+	location.hh position.hh stack.hh FlexLexer.h expressions/statement/strep.hpp \
 	context.hpp turtle/turtle.cpp expressions/statement/stforw.hpp \
+	expressions/statement/stleft.hpp expressions/statement/stpen.hpp \
+	expressions/statement/stcolor.hpp expressions/statement/strep.hpp \
 	expressions/statement.hpp expressions/statement/stassignment.hpp \
 	driver.cpp driver.hpp expressions/expression.hpp writer.hpp writers/default.cpp
 

@@ -10,14 +10,14 @@
 
 class STLeft : public Statement {
 private:
-  int deg;
+  ArithNode* deg;
 
 public:
-  explicit STLeft(int deg) : deg(deg) { }
+  explicit STLeft(ArithNode* deg) : deg(deg) { }
 
   void execute(Context& ctx) const
   {
-    ctx.turtle().left(deg);
+    ctx.turtle().left(deg->evaluate());
   }
 
 };

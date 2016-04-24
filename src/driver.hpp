@@ -24,7 +24,7 @@ class Driver
 {
 public:
     /// construct a new parser driver context
-    Driver(class Context& calc);
+    Driver(class Context& ctx);
 
     /// enable debug output in the flex scanner
     bool trace_scanning;
@@ -74,9 +74,9 @@ public:
      * parser to the scanner. It is used in the yylex macro. */
     class Scanner* lexer;
 
-    /** Reference to the calculator context filled during parsing of the
+    /** Reference to the context filled during parsing of the
      * expressions. */
-    class Context& calc;
+    class Context& ctx;
 };
 
 } // namespace example

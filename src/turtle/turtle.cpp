@@ -27,7 +27,7 @@ void Turtle::forward(int steps) {
   pos_x += (double)steps*cos(M_PI*(double)rot/180);
   pos_y += (double)steps*sin(M_PI*(double)rot/180);
 
-  /* if(pen_down) */ writer->draw_line(color, pre_x, pre_y, pos_x, pos_y);
+  if(pen_down) writer->draw_line(color, pre_x, pre_y, pos_x, pos_y);
 }
 
 void Turtle::back(int steps) {

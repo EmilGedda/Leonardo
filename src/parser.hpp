@@ -124,13 +124,14 @@ namespace example {
     /// Symbol semantic values.
     union semantic_type
     {
-    #line 58 "parser.yy" // lalr1.cc:377
+    #line 61 "parser.yy" // lalr1.cc:377
 
     int                 integerVal;
     std::string*		stringVal;
     class ArithNode*	node;
+    class Statement*    statement;
 
-#line 134 "parser.hpp" // lalr1.cc:377
+#line 135 "parser.hpp" // lalr1.cc:377
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -479,8 +480,8 @@ namespace example {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 40,     ///< Last index in yytable_.
-      yynnts_ = 11,  ///< Number of nonterminal symbols.
+      yylast_ = 67,     ///< Last index in yytable_.
+      yynnts_ = 12,  ///< Number of nonterminal symbols.
       yyfinal_ = 2, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
@@ -495,7 +496,7 @@ namespace example {
 
 
 } // example
-#line 499 "parser.hpp" // lalr1.cc:377
+#line 500 "parser.hpp" // lalr1.cc:377
 
 
 

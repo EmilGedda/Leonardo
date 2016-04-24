@@ -20,6 +20,10 @@ public:
     ctx.turtle().left(deg->evaluate());
   }
 
+  ~STLeft() {
+    delete deg;
+  }
+
 };
 
 #endif

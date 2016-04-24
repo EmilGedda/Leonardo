@@ -21,6 +21,10 @@ public:
     ctx.turtle().forward(steps->evaluate());
   }
 
+  ~STForw() {
+    delete steps;
+  }
+
 };
 
 #endif

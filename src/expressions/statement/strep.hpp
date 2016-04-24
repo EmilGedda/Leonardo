@@ -23,6 +23,12 @@ public:
       ast->execute(ctx); 
   }
 
+  ~STRep() 
+  {
+    delete count;
+    delete ast;
+  }
+
 };
 
 #endif

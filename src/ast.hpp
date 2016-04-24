@@ -22,6 +22,8 @@ public:
   }
 
   ~AST() {
+    for(unsigned int i = 0; i < statements.size(); i++)
+      delete statements[i];
     statements.clear();
   }
 

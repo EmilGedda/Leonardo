@@ -8,7 +8,9 @@ noinst_LIBRARIES = liblogoparser.a
 liblogoparser_a_SOURCES = \
 	parser.yy scanner.ll parser.hpp scanner.hpp y.tab.hpp \
 	location.hh position.hh stack.hh FlexLexer.h \
-	driver.cpp driver.hpp expression.hpp
+	context.hpp \
+	expressions/statement.hpp expressions/statement/stassignment.hpp \
+	driver.cpp driver.hpp expressions/expression.hpp writer.hpp writers/svg.cpp
 
 bin_PROGRAMS = leonardo
 

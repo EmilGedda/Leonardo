@@ -6,9 +6,9 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
-
-#include "expression.hpp"
-
+#include <memory>
+#include "expressions/expression.hpp"
+#include "expressions/statement/stassignment.hpp"
 %}
 
 /*** yacc/bison Declarations ***/
@@ -102,12 +102,12 @@ constant: INTEGER
 
 variable: STRING
         {
-	        if (!driver.calc.existsVariable(*$1)) {
+	        if (!driver.calc.variable_exists(*$1)) {
 		        error(yyla.location, "Unknown variable \"" + *$1 + "\"");
 		        delete $1;
 		        YYERROR;
 	        } else {
-		        $$ = new NConstant(driver.calc.getVariable(*$1));
+		        $$ = new NConstant(driver.calc.get_variable(*$1));
 		        delete $1;
 	        }
 	    }
@@ -171,18 +171,18 @@ expr: addexpr
 
 assignment: STRING EQ expr DOT
         {
-		    driver.calc.variables[*$1] = $3->evaluate();
-		    std::cout << "Setting variable " << *$1
-			   << " = " << driver.calc.variables[*$1] << "\n";
-		    delete $1;
-		    delete $3;
+            /* SEGFAULT SWAMP */
+            std::unique_ptr<ArithNode> node(*&$3);
+            driver.calc.statements.push_back(new STAssignment(*$1, std::move(node)));
+            delete $1; /* Possible?  */
+            /* TODO: Fix mem-leak */
 	    }
 
 start: /* empty file is valid aswell */
 	    | start assignment
         | start expr DOT
         {
-	      driver.calc.expressions.push_back($2);
+	      /*driver.calc.statements.push_back($2);*/
 	    }
         
  /*** END EXAMPLE - Change the example grammar rules above ***/

@@ -4,12 +4,18 @@
 #include <fstream>
 
 #include "driver.hpp"
-#include "expression.hpp"
+#include "expressions/expression.hpp"
+#include "turtle/turtle.hpp"
+#include "writers/svg.hpp"
+#include "context.hpp"
 
 int main(int argc, char *argv[])
 {
-  Context calc;
-  example::Driver driver(calc);
+  std::cout << "Pre some parsing";
+  std::unique_ptr<Writer> writer(new SVG());
+  Context ctx(std::move(writer));
+
+  example::Driver driver(ctx);
   bool readfile = false;
 
   for(int ai = 1; ai < argc; ++ai)
@@ -31,20 +37,13 @@ int main(int argc, char *argv[])
         return 0;
       }
 
-      calc.clearExpressions();
+      ctx.clear_expressions();
       bool result = driver.parse_stream(infile, argv[ai]);
       if (result)
       {
-        std::cout << "Expressions:" << std::endl;
-        for (unsigned int ei = 0; ei < calc.expressions.size(); ++ei)
-        {
-          std::cout << "[" << ei << "]:" << std::endl;
-          std::cout << "tree:" << std::endl;
-          calc.expressions[ei]->print(std::cout);
-          std::cout << "evaluated: "
-            << calc.expressions[ei]->evaluate()
-            << std::endl;
-        }
+        for(auto& s: ctx.statements)
+          s->execute(ctx);
+        std::cout << "Done did some parsing";
       }
 
       readfile = true;
@@ -55,24 +54,4 @@ int main(int argc, char *argv[])
 
   std::cout << "Reading expressions from stdin" << std::endl;
 
-  std::string line;
-  while( std::cout << "input: " &&
-      std::getline(std::cin, line) &&
-      !line.empty() )
-  {
-    calc.clearExpressions();
-    bool result = driver.parse_string(line, "input");
-
-    if (result)
-    {
-      for (unsigned int ei = 0; ei < calc.expressions.size(); ++ei)
-      {
-        std::cout << "tree:" << std::endl;
-        calc.expressions[ei]->print(std::cout);
-        std::cout << "evaluated: "
-          << calc.expressions[ei]->evaluate()
-          << std::endl;
-      }
-    }
-  }
 }

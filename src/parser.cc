@@ -40,9 +40,9 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
-
-#include "expression.hpp"
-
+#include <memory>
+#include "expressions/expression.hpp"
+#include "expressions/statement/stassignment.hpp"
 
 #line 48 "parser.cc" // lalr1.cc:404
 
@@ -714,12 +714,12 @@ namespace example {
   case 3:
 #line 104 "parser.yy" // lalr1.cc:859
     {
-	        if (!driver.calc.existsVariable(*(yystack_[0].value.stringVal))) {
+	        if (!driver.calc.variable_exists(*(yystack_[0].value.stringVal))) {
 		        error(yyla.location, "Unknown variable \"" + *(yystack_[0].value.stringVal) + "\"");
 		        delete (yystack_[0].value.stringVal);
 		        YYERROR;
 	        } else {
-		        (yylhs.value.node) = new NConstant(driver.calc.getVariable(*(yystack_[0].value.stringVal)));
+		        (yylhs.value.node) = new NConstant(driver.calc.get_variable(*(yystack_[0].value.stringVal)));
 		        delete (yystack_[0].value.stringVal);
 	        }
 	    }
@@ -833,11 +833,11 @@ namespace example {
   case 17:
 #line 173 "parser.yy" // lalr1.cc:859
     {
-		    driver.calc.variables[*(yystack_[3].value.stringVal)] = (yystack_[1].value.node)->evaluate();
-		    std::cout << "Setting variable " << *(yystack_[3].value.stringVal)
-			   << " = " << driver.calc.variables[*(yystack_[3].value.stringVal)] << "\n";
-		    delete (yystack_[3].value.stringVal);
-		    delete (yystack_[1].value.node);
+            /* SEGFAULT SWAMP */
+            std::unique_ptr<ArithNode> node(*&(yystack_[1].value.node));
+            driver.calc.statements.push_back(new STAssignment(*(yystack_[3].value.stringVal), std::move(node)));
+            delete (yystack_[3].value.stringVal); /* Possible?  */
+            /* TODO: Fix mem-leak */
 	    }
 #line 843 "parser.cc" // lalr1.cc:859
     break;
@@ -845,7 +845,7 @@ namespace example {
   case 20:
 #line 184 "parser.yy" // lalr1.cc:859
     {
-	      driver.calc.expressions.push_back((yystack_[1].value.node));
+	      /*driver.calc.statements.push_back($2);*/
 	    }
 #line 851 "parser.cc" // lalr1.cc:859
     break;

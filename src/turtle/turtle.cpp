@@ -1,5 +1,4 @@
 #include <string>
-#include <memory>
 #include <cmath>
 #include "turtle.hpp"
 
@@ -14,11 +13,11 @@ void Turtle::down() {
 }
 
 void Turtle::left(int deg) {
-  rot -= deg;
+  rot += deg;
 }
 
 void Turtle::right(int deg) {
-  rot += deg;
+  rot -= deg;
 }
 
 void Turtle::forward(int steps) {
@@ -28,7 +27,7 @@ void Turtle::forward(int steps) {
   pos_x += (double)steps*cos(M_PI*(double)rot/180);
   pos_y += (double)steps*sin(M_PI*(double)rot/180);
 
-  writer->draw_line(color, pre_x, pre_y, pos_x, pos_y);
+  /* if(pen_down) */ writer->draw_line(color, pre_x, pre_y, pos_x, pos_y);
 }
 
 void Turtle::back(int steps) {

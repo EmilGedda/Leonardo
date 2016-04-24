@@ -7,4 +7,5 @@
 #include "arithmetic/nmultiply.hpp"
 #include "arithmetic/nnegate.hpp"
 #include "arithmetic/nsubtract.hpp"
+#include "arithmetic/nvariable.hpp"
 

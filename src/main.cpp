@@ -6,13 +6,12 @@
 #include "driver.hpp"
 #include "expressions/expression.hpp"
 #include "turtle/turtle.hpp"
-#include "writers/svg.hpp"
+#include "writers/default.hpp"
 #include "context.hpp"
 
 int main(int argc, char *argv[])
 {
-  std::cout << "Pre some parsing";
-  std::unique_ptr<Writer> writer(new SVG());
+  std::unique_ptr<Writer> writer(new Default());
   Context ctx(std::move(writer));
 
   example::Driver driver(ctx);
@@ -41,9 +40,9 @@ int main(int argc, char *argv[])
       bool result = driver.parse_stream(infile, argv[ai]);
       if (result)
       {
-        for(auto& s: ctx.statements)
+
+        for(auto& s: *ctx.statements.top())
           s->execute(ctx);
-        std::cout << "Done did some parsing";
       }
 
       readfile = true;

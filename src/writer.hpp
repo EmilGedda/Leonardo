@@ -6,7 +6,7 @@
 
 class Writer {
 
-private:
+protected:
   std::ostream& out;
 
 public:

@@ -39,6 +39,46 @@ typedef example::Parser::token_type token_type;
 
 
  /*** BEGIN EXAMPLE - Change the example lexer rules below ***/
+
+"%".* {
+    yylloc->step();
+}
+"FORW" {
+    return token::TOKEN_FORW;
+}
+
+"BACK" {
+    return token::TOKEN_BACK;
+}
+
+"UP" {
+    return token::TOKEN_UP;
+}
+
+"DOWN" {
+    return token::TOKEN_DOWN;
+}
+
+"LEFT" {
+    return token::TOKEN_LEFT;
+}
+
+"RIGHT" {
+    return token::TOKEN_RIGHT;
+}
+
+"COLOR" {
+    return token::TOKEN_COLOR;
+}
+
+"REP" {
+    return token::TOKEN_REP;
+}
+
+"#"[0-9A-F]{6} {
+    return token::TOKEN_QUOTE;
+}
+
 "+" {
     return token::TOKEN_PLUS;
 }
@@ -76,7 +116,7 @@ typedef example::Parser::token_type token_type;
     return token::TOKEN_INTEGER;
 }
 
-[A-Za-z][A-Za-z0-9_]* {
+[A-Z][A-Z0-9_]* {
     yylval->stringVal = new std::string(yytext, yyleng);
     return token::TOKEN_STRING;
 }

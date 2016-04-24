@@ -1,1 +1,7 @@
-str = 100/3/3.
+% Det här är en kommentar
+% Nu ritar vi en kvadrat
+DOWN. 
+FORW 1. LEFT 90.
+FORW 1. LEFT 90.
+FORW 1. LEFT 90.
+FORW 1. LEFT 90.

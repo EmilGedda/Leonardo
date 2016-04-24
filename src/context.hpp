@@ -5,6 +5,7 @@
 #include <vector>
 #include <ostream>
 #include <stdexcept>
+#include <stack>
 
 #include "expressions/statement/statement.hpp"
 #include "turtle/turtle.hpp"
@@ -22,7 +23,9 @@ public:
   
   Turtle leonardo;
 
-  Context(std::unique_ptr<Writer> w) : leonardo(std::move(w)) { }
+  Context(std::unique_ptr<Writer> w) : leonardo(std::move(w)) { 
+    statements.push(new std::vector<Statement*>());
+  }
 
   Turtle& turtle() {
     return leonardo;
@@ -30,21 +33,22 @@ public:
 
   /// array of unassigned expressions found by the parser. these are then
   /// outputted to the user.
-  std::vector<Statement*>	statements;
+  std::stack<std::vector<Statement*>*>	statements;
 
   /// free the saved expression trees
   ~Context()
   {
     clear_expressions();
+    delete statements.top();
   }
 
   /// free all saved expression trees
   void clear_expressions()
   {
-    for(unsigned int i = 0; i < statements.size(); ++i)
-      delete statements[i];
+    for(unsigned int i = 0; i < statements.top()->size(); ++i)
+      delete statements.top()->at(i);
 
-    statements.clear();
+    statements.top()->clear();
   }
 
   /// check if the given variable name exists in the storage

@@ -1,5 +1,5 @@
-#ifndef STFORW_HPP
-#define STFORW_HPP
+#ifndef STLEFT_HPP
+#define STLEFT_HPP
 
 #include "statement.hpp"
 #include "../arithmetic/arithnode.hpp"

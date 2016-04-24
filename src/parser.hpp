@@ -124,7 +124,7 @@ namespace example {
     /// Symbol semantic values.
     union semantic_type
     {
-    #line 55 "parser.yy" // lalr1.cc:377
+    #line 58 "parser.yy" // lalr1.cc:377
 
     int                 integerVal;
     std::string*		stringVal;
@@ -161,7 +161,17 @@ namespace example {
         TOKEN_PLUS = 265,
         TOKEN_MINUS = 266,
         TOKEN_MUL = 267,
-        TOKEN_DIV = 268
+        TOKEN_DIV = 268,
+        TOKEN_FORW = 269,
+        TOKEN_BACK = 270,
+        TOKEN_UP = 271,
+        TOKEN_DOWN = 272,
+        TOKEN_LEFT = 273,
+        TOKEN_RIGHT = 274,
+        TOKEN_COLOR = 275,
+        TOKEN_REP = 276,
+        TOKEN_QUOTE = 277,
+        TOKEN_HEX = 278
       };
     };
 
@@ -469,12 +479,12 @@ namespace example {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 30,     ///< Last index in yytable_.
-      yynnts_ = 10,  ///< Number of nonterminal symbols.
+      yylast_ = 40,     ///< Last index in yytable_.
+      yynnts_ = 11,  ///< Number of nonterminal symbols.
       yyfinal_ = 2, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 14  ///< Number of tokens.
+      yyntokens_ = 24  ///< Number of tokens.
     };
 
 
@@ -485,7 +495,7 @@ namespace example {
 
 
 } // example
-#line 489 "parser.hpp" // lalr1.cc:377
+#line 499 "parser.hpp" // lalr1.cc:377
 
 
 

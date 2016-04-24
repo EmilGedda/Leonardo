@@ -9,6 +9,9 @@
 #include <memory>
 #include "expressions/expression.hpp"
 #include "expressions/statement/stassignment.hpp"
+#include "expressions/statement/stforw.hpp"
+#include "expressions/statement/stpen.hpp"
+#include "expressions/statement/stleft.hpp"
 %}
 
 /*** yacc/bison Declarations ***/
@@ -73,6 +76,18 @@
 %token MUL          "multiplication"
 %token DIV          "division"
 
+/* Turtle commands */
+%token FORW         "forward"
+%token BACK         "back"
+%token UP           "up"
+%token DOWN         "down"
+%token LEFT         "left"
+%token RIGHT        "right"
+%token COLOR        "color"
+%token REP          "rep"
+%token QUOTE        "\""
+%token HEX          "hexcode"
+
 %type <node>	constant variable
 %type <node>	atomexpr unaryexpr mulexpr addexpr expr
 
@@ -107,7 +122,7 @@ variable: STRING
 		        delete $1;
 		        YYERROR;
 	        } else {
-		        $$ = new NConstant(driver.calc.get_variable(*$1));
+		        $$ = new NVariable(*$1, driver.calc);
 		        delete $1;
 	        }
 	    }
@@ -169,18 +184,56 @@ expr: addexpr
 	        $$ = $1;
 	    }
 
+stmt: /*REP INTEGER repcont
+        {
+
+        }
+        |*/ FORW INTEGER DOT
+        {
+            driver.calc.statements.top()->push_back(new STForw($2));
+        }
+        | BACK INTEGER DOT
+        {
+            driver.calc.statements.top()->push_back(new STForw(-1 * $2));
+        }
+        | DOWN DOT
+        {
+            driver.calc.statements.top()->push_back(new STPen(1));
+        }
+        | UP DOT
+        {
+            driver.calc.statements.top()->push_back(new STPen(0));
+        }
+        | LEFT INTEGER DOT
+        {
+            driver.calc.statements.top()->push_back(new STLeft($2));
+        }
+        | RIGHT INTEGER DOT
+        {
+            driver.calc.statements.top()->push_back(new STLeft(-1 * $2));
+        }
+/*
+repcont: QUOTE start QUOTE
+        {
+
+        }
+        | stmt 
+        {
+
+        }
+*/
 assignment: STRING EQ expr DOT
         {
             /* SEGFAULT SWAMP */
-            std::unique_ptr<ArithNode> node(*&$3);
-            driver.calc.statements.push_back(new STAssignment(*$1, std::move(node)));
+            std::unique_ptr<ArithNode> node($3);
+            driver.calc.statements.top()->push_back(new STAssignment(*$1, std::move(node)));
             delete $1; /* Possible?  */
             /* TODO: Fix mem-leak */
 	    }
 
 start: /* empty file is valid aswell */
 	    | start assignment
-        | start expr DOT
+        | start stmt
         {
 	      /*driver.calc.statements.push_back($2);*/
 	    }

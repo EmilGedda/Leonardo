@@ -9,14 +9,14 @@
 
 class STPen : public Statement {
 private:
-  int state;
+  int pen_down;
 
 public:
-  explicit STPen(int state) : state(state) { }
+  explicit STPen(int state) : pen_down(state) { }
 
   void execute(Context& ctx) const
   {
-    state ? ctx.turtle().up() : ctx.turtle().down();
+    pen_down ? ctx.turtle().down() : ctx.turtle().up();
   }
 
 };

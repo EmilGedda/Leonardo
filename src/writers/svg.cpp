@@ -16,7 +16,7 @@ void SVG::draw_line(std::string color, double from_x,
                       + " y1=\"" + std::to_string(from_y*45) + "\""
                       + " x2=\"" + std::to_string(to_x*45) + "\""
                       + " y2=\"" + std::to_string(to_y*45) + "\""
-                      + " style=\"stroke:" + color + ";stroke-width:1px\" />");
+                      + " style=\"stroke:" + color + "\" />");
 
 }
 
@@ -24,8 +24,8 @@ void SVG::init() {
 }
 
 void SVG::finalize() {
-  out << std::setprecision(10) << "<svg width=\"300px\" height=\"300px\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewBox=\"" + std::to_string(min_x*50) + " " + std::to_string(min_y*50) + " " 
-        + std::to_string((max_x - min_x)*50) + " " + std::to_string((max_y - min_y)*50) + "\">";
+  out << std::setprecision(10) << "<svg width=\"10cm\" height=\"10cm\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewBox=\"" + std::to_string(min_x*46-5) + " " + std::to_string(max_y*-46) + " " 
+        + std::to_string((max_x - min_x)*46+5) + " " + std::to_string((max_y - min_y)*46) + "\">";
   out << std::endl << "    <g transform=\"scale(1,-1)\">" << std::endl;
   for(auto& s : lines)
     out << "        " << s << std::endl;

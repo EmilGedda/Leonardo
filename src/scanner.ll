@@ -20,7 +20,7 @@ typedef example::Parser::token_type token_type;
 %}
 
 /*** Flex Declarations and Options ***/
-
+%option debug batch
 /* enable c++ scanner class generation */
 %option c++
 

@@ -34,9 +34,3 @@ void SVG::finalize() {
   out << "</svg>" << std::endl;
 }
 
-std::string SVG::to_str(double val)
-{
-    std::ostringstream out;
-    out << std::setprecision(10) << val;
-    return out.str();
-}

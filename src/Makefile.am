@@ -16,7 +16,8 @@ liblogoparser_a_SOURCES = \
 	expressions/arithmetic/nconstant.hpp expressions/arithmetic/ndivide.hpp \
 	expressions/arithmetic/nmultiply.hpp expressions/arithmetic/nnegate.hpp \
 	expressions/arithmetic/nsubtract.hpp expressions/statement/statement.hpp \ 
-	driver.cpp driver.hpp expressions/expression.hpp writer.hpp writers/svg.cpp writers/svg.hpp
+	driver.cpp driver.hpp expressions/expression.hpp writer.hpp writers/svg.cpp writers/svg.hpp \
+	writers/default.cpp writers/default.hpp
 
 bin_PROGRAMS = leonardo
 

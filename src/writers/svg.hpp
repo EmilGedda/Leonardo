@@ -16,15 +16,15 @@ private:
   std::vector<std::string> lines;
 
   void init();
-  void finalize();
   std::string to_str(double val);
 public:
 
-  ~SVG() { finalize(); }
+  ~SVG() { }
   SVG(int padding = 0) : Writer(), padding(padding) { init(); }
   SVG(std::ostream& output, int padding = 0)
     : Writer(output), padding(padding) { init(); }
 
+  void finalize() override;
   void draw_line(std::string color, double from_x,
       double from_y, double to_x, double to_y) override;
 };

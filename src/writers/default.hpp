@@ -6,6 +6,7 @@
 class Default final : public Writer {
 
 public:
+  void finalize() override { }
   ~Default() { }
   Default() : Writer() { }
   Default(std::ostream& output) : Writer(output) { }

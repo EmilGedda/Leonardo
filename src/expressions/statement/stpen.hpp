@@ -7,6 +7,7 @@
 #include <memory>
 #include <string>
 
+// a pen status change statement. UP -> state == 0, DOWN -> state == 1
 class STPen : public Statement {
 private:
   int pen_down;

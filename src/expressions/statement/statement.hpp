@@ -1,11 +1,12 @@
 #ifndef STATEMENT_HPP
 #define STATEMENT_HPP
 
-#include "../../turtle/turtle.hpp"
-
+// forward declaration
 class Context;
 
-class Statement {
+// abstract base class
+class Statement
+{
 
 public:
   virtual ~Statement() { }

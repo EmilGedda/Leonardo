@@ -2,29 +2,27 @@
 #define AST_HPP
 #include "expressions/statement/statement.hpp"
 #include <vector>
+#include <memory>
 
+// Forward declaration
 class Context;
 
-class AST {
-// TODO: std::unique_ptr
+class AST
+{
+
 private:
-  std::vector<Statement*> statements;
+  // Our AST is actually a vector of Statements
+  std::vector<std::unique_ptr<Statement>> statements;
 
 public:
-
-  void add(Statement* statement) {
-    statements.push_back(statement);
+  void add(std::unique_ptr<Statement> statement) {
+    statements.push_back(std::move(statement));
   }
 
+  // Execute all statements in order
   void execute(Context& ctx) {
     for(auto& s : statements)
       s->execute(ctx);
-  }
-
-  ~AST() {
-    for(unsigned int i = 0; i < statements.size(); i++)
-      delete statements[i];
-    statements.clear();
   }
 
 };

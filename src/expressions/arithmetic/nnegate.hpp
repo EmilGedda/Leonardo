@@ -2,37 +2,25 @@
 #define NNEGATE_HPP
 
 #include "arithnode.hpp"
-#include <ostream>
+#include <memory>
 
 /** Calculation node negating the value of the operand subtree. */
 class NNegate : public ArithNode
 {
 
 private:
-  /// calculation subtree
-  ArithNode* 	node;
+  // node subtree
+  std::unique_ptr<ArithNode> node;
 
 public:
-  explicit NNegate(ArithNode* _node)
-    : ArithNode(), node(_node)
-  {
-  }
-
-  virtual ~NNegate()
-  {
-    delete node;
-  }
+  explicit NNegate(std::unique_ptr<ArithNode> node)
+    : ArithNode(), node(std::move(node)) { }
 
   virtual int evaluate() const
   {
     return - node->evaluate();
   }
 
-  virtual void print(std::ostream &os, unsigned int depth) const
-  {
-    os << indent(depth) << "- negate" << std::endl;
-    node->print(os, depth+1);
-  }
 };
 
 #endif

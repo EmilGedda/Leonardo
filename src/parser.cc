@@ -776,144 +776,163 @@ namespace example {
   case 9:
 #line 152 "parser.yy" // lalr1.cc:859
     {
-		    (yylhs.value.node) = new NNegate((yystack_[0].value.node));
+            std::unique_ptr<ArithNode> node((yystack_[0].value.node));
+		    (yylhs.value.node) = new NNegate(std::move(node));
 	    }
-#line 782 "parser.cc" // lalr1.cc:859
+#line 783 "parser.cc" // lalr1.cc:859
     break;
 
   case 10:
-#line 157 "parser.yy" // lalr1.cc:859
+#line 158 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = (yystack_[0].value.node);
 	    }
-#line 790 "parser.cc" // lalr1.cc:859
+#line 791 "parser.cc" // lalr1.cc:859
     break;
 
   case 11:
-#line 161 "parser.yy" // lalr1.cc:859
+#line 162 "parser.yy" // lalr1.cc:859
     {
-	        (yylhs.value.node) = new NMultiply((yystack_[2].value.node), (yystack_[0].value.node));
+            std::unique_ptr<ArithNode> node1((yystack_[2].value.node));
+            std::unique_ptr<ArithNode> node2((yystack_[0].value.node));
+	        (yylhs.value.node) = new NMultiply(std::move(node1), std::move(node2));
 	    }
-#line 798 "parser.cc" // lalr1.cc:859
+#line 801 "parser.cc" // lalr1.cc:859
     break;
 
   case 12:
-#line 165 "parser.yy" // lalr1.cc:859
+#line 168 "parser.yy" // lalr1.cc:859
     {
-	        (yylhs.value.node) = new NDivide((yystack_[2].value.node), (yystack_[0].value.node));
+            std::unique_ptr<ArithNode> node1((yystack_[2].value.node));
+            std::unique_ptr<ArithNode> node2((yystack_[0].value.node));
+	        (yylhs.value.node) = new NDivide(std::move(node1), std::move(node2));
 	    }
-#line 806 "parser.cc" // lalr1.cc:859
+#line 811 "parser.cc" // lalr1.cc:859
     break;
 
   case 13:
-#line 170 "parser.yy" // lalr1.cc:859
+#line 175 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = (yystack_[0].value.node);
 	    }
-#line 814 "parser.cc" // lalr1.cc:859
+#line 819 "parser.cc" // lalr1.cc:859
     break;
 
   case 14:
-#line 174 "parser.yy" // lalr1.cc:859
+#line 179 "parser.yy" // lalr1.cc:859
     {
-	        (yylhs.value.node) = new NAdd((yystack_[2].value.node), (yystack_[0].value.node));
+            std::unique_ptr<ArithNode> node1((yystack_[2].value.node));
+            std::unique_ptr<ArithNode> node2((yystack_[0].value.node));
+	        (yylhs.value.node) = new NAdd(std::move(node1), std::move(node2));
 	    }
-#line 822 "parser.cc" // lalr1.cc:859
+#line 829 "parser.cc" // lalr1.cc:859
     break;
 
   case 15:
-#line 178 "parser.yy" // lalr1.cc:859
+#line 185 "parser.yy" // lalr1.cc:859
     {
-	        (yylhs.value.node) = new NSubtract((yystack_[2].value.node), (yystack_[0].value.node));
+            std::unique_ptr<ArithNode> node1((yystack_[2].value.node));
+            std::unique_ptr<ArithNode> node2((yystack_[0].value.node));
+	        (yylhs.value.node) = new NSubtract(std::move(node1), std::move(node2));
 	    }
-#line 830 "parser.cc" // lalr1.cc:859
+#line 839 "parser.cc" // lalr1.cc:859
     break;
 
   case 16:
-#line 183 "parser.yy" // lalr1.cc:859
+#line 192 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = (yystack_[0].value.node);
 	    }
-#line 838 "parser.cc" // lalr1.cc:859
+#line 847 "parser.cc" // lalr1.cc:859
     break;
 
   case 17:
-#line 188 "parser.yy" // lalr1.cc:859
+#line 197 "parser.yy" // lalr1.cc:859
     {
-            driver.ctx.ast.push(new AST());
+            /* Push a new AST to the current context stack*/
+            std::unique_ptr<AST> ast(new AST());
+            driver.ctx.ast.push(std::move(ast));
         }
-#line 846 "parser.cc" // lalr1.cc:859
+#line 857 "parser.cc" // lalr1.cc:859
     break;
 
   case 18:
-#line 191 "parser.yy" // lalr1.cc:859
+#line 202 "parser.yy" // lalr1.cc:859
     {
-            auto s = driver.ctx.ast.top();
+            /* Pop the stack and add it to the rep */
+            std::unique_ptr<AST> s = std::move(driver.ctx.ast.top());
             driver.ctx.ast.pop();
-            (yylhs.value.statement) = new STRep((yystack_[2].value.node), s);
+            std::unique_ptr<ArithNode> node((yystack_[2].value.node));
+            (yylhs.value.statement) = new STRep(std::move(node), std::move(s));
         }
-#line 856 "parser.cc" // lalr1.cc:859
+#line 869 "parser.cc" // lalr1.cc:859
     break;
 
   case 19:
-#line 197 "parser.yy" // lalr1.cc:859
+#line 210 "parser.yy" // lalr1.cc:859
     {
-            (yylhs.value.statement) = new STForw((yystack_[1].value.node));
+            std::unique_ptr<ArithNode> node((yystack_[1].value.node));
+            (yylhs.value.statement) = new STForw(std::move(node));
         }
-#line 864 "parser.cc" // lalr1.cc:859
+#line 878 "parser.cc" // lalr1.cc:859
     break;
 
   case 20:
-#line 201 "parser.yy" // lalr1.cc:859
+#line 215 "parser.yy" // lalr1.cc:859
     {
-            (yylhs.value.statement) = new STForw(new NNegate((yystack_[1].value.node)));
-        }
-#line 872 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 21:
-#line 205 "parser.yy" // lalr1.cc:859
-    {
-            (yylhs.value.statement) = new STPen(1);
-        }
-#line 880 "parser.cc" // lalr1.cc:859
-    break;
-
-  case 22:
-#line 209 "parser.yy" // lalr1.cc:859
-    {
-            (yylhs.value.statement) = new STPen(0);
+            std::unique_ptr<ArithNode> node((yystack_[1].value.node));
+            std::unique_ptr<NNegate> neg(new NNegate(std::move(node))); 
+            (yylhs.value.statement) = new STForw(std::move(neg));
         }
 #line 888 "parser.cc" // lalr1.cc:859
     break;
 
-  case 23:
-#line 213 "parser.yy" // lalr1.cc:859
+  case 21:
+#line 221 "parser.yy" // lalr1.cc:859
     {
-            (yylhs.value.statement) = new STLeft((yystack_[1].value.node));
+            (yylhs.value.statement) = new STPen(1);
         }
 #line 896 "parser.cc" // lalr1.cc:859
     break;
 
-  case 24:
-#line 217 "parser.yy" // lalr1.cc:859
+  case 22:
+#line 225 "parser.yy" // lalr1.cc:859
     {
-            (yylhs.value.statement) = new STLeft(new NNegate((yystack_[1].value.node)));
+            (yylhs.value.statement) = new STPen(0);
         }
 #line 904 "parser.cc" // lalr1.cc:859
     break;
 
-  case 25:
-#line 221 "parser.yy" // lalr1.cc:859
+  case 23:
+#line 229 "parser.yy" // lalr1.cc:859
     {
-            (yylhs.value.statement) = new STColor(*(yystack_[1].value.stringVal));
-            delete (yystack_[1].value.stringVal);
+            std::unique_ptr<ArithNode> node((yystack_[1].value.node));
+            (yylhs.value.statement) = new STLeft(std::move(node));
         }
 #line 913 "parser.cc" // lalr1.cc:859
     break;
 
+  case 24:
+#line 234 "parser.yy" // lalr1.cc:859
+    {
+            std::unique_ptr<ArithNode> node((yystack_[1].value.node));
+            std::unique_ptr<NNegate> neg(new NNegate(std::move(node))); 
+            (yylhs.value.statement) = new STLeft(std::move(neg));
+        }
+#line 923 "parser.cc" // lalr1.cc:859
+    break;
+
+  case 25:
+#line 240 "parser.yy" // lalr1.cc:859
+    {
+            (yylhs.value.statement) = new STColor(*(yystack_[1].value.stringVal));
+            delete (yystack_[1].value.stringVal);
+        }
+#line 932 "parser.cc" // lalr1.cc:859
+    break;
+
   case 26:
-#line 226 "parser.yy" // lalr1.cc:859
+#line 245 "parser.yy" // lalr1.cc:859
     {
             /* SEGFAULT SWAMP */
             std::unique_ptr<ArithNode> node((yystack_[1].value.node));
@@ -921,43 +940,46 @@ namespace example {
             delete (yystack_[3].value.stringVal); /* Possible?  */
             /* TODO: Fix mem-leak */
 	    }
-#line 925 "parser.cc" // lalr1.cc:859
+#line 944 "parser.cc" // lalr1.cc:859
     break;
 
   case 27:
-#line 235 "parser.yy" // lalr1.cc:859
+#line 254 "parser.yy" // lalr1.cc:859
     {
         
         }
-#line 933 "parser.cc" // lalr1.cc:859
+#line 952 "parser.cc" // lalr1.cc:859
     break;
 
   case 28:
-#line 239 "parser.yy" // lalr1.cc:859
+#line 258 "parser.yy" // lalr1.cc:859
     {
-            driver.ctx.ast.top()->add((yystack_[0].value.statement));
+            std::unique_ptr<Statement> statement((yystack_[0].value.statement));
+            driver.ctx.ast.top()->add(std::move(statement));
         }
-#line 941 "parser.cc" // lalr1.cc:859
+#line 961 "parser.cc" // lalr1.cc:859
     break;
 
   case 29:
-#line 245 "parser.yy" // lalr1.cc:859
+#line 265 "parser.yy" // lalr1.cc:859
     {
-	        driver.ctx.ast.top()->add((yystack_[0].value.statement));
+            std::unique_ptr<Statement> statement((yystack_[0].value.statement));
+	        driver.ctx.ast.top()->add(std::move(statement));
 	    }
-#line 949 "parser.cc" // lalr1.cc:859
+#line 970 "parser.cc" // lalr1.cc:859
     break;
 
   case 30:
-#line 249 "parser.yy" // lalr1.cc:859
+#line 270 "parser.yy" // lalr1.cc:859
     {
-	        driver.ctx.ast.top()->add((yystack_[0].value.statement));
+            std::unique_ptr<Statement> statement((yystack_[0].value.statement));
+	        driver.ctx.ast.top()->add(std::move(statement));
 	    }
-#line 957 "parser.cc" // lalr1.cc:859
+#line 979 "parser.cc" // lalr1.cc:859
     break;
 
 
-#line 961 "parser.cc" // lalr1.cc:859
+#line 983 "parser.cc" // lalr1.cc:859
             default:
               break;
             }
@@ -1323,13 +1345,13 @@ namespace example {
   };
 
 #if YYDEBUG
-  const unsigned char
+  const unsigned short int
   Parser::yyrline_[] =
   {
        0,   119,   119,   124,   130,   134,   138,   143,   147,   151,
-     156,   160,   164,   169,   173,   177,   182,   188,   187,   196,
-     200,   204,   208,   212,   216,   220,   225,   234,   238,   244,
-     248,   253,   254
+     157,   161,   167,   174,   178,   184,   191,   197,   196,   209,
+     214,   220,   224,   228,   233,   239,   244,   253,   257,   264,
+     269,   275,   276
   };
 
   // Print the state stack on the debug stream.
@@ -1412,8 +1434,8 @@ namespace example {
 
 
 } // example
-#line 1416 "parser.cc" // lalr1.cc:1167
-#line 258 "parser.yy" // lalr1.cc:1168
+#line 1438 "parser.cc" // lalr1.cc:1167
+#line 280 "parser.yy" // lalr1.cc:1168
  /*** Additional Code ***/
 
 void example::Parser::error(const Parser::location_type& l,

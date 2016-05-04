@@ -6,27 +6,27 @@
 #include "../arithmetic/arithnode.hpp"
 
 #include <memory>
-#include <string>
 
-class STRep : public Statement {
+// A REP Command. The Parser (bison) handles the quote-stuff in the grammar
+class STRep : public Statement
+{
+
 private:
-  ArithNode* count;
-  AST* ast;
+  
+  std::unique_ptr<ArithNode> count;
+
+  // A collection of statements (AST) which the REP should run.
+  std::unique_ptr<AST> ast;
 
 public:
-  explicit STRep(ArithNode* count, AST* ast) : count(count), ast(ast) { }
+  explicit STRep(std::unique_ptr<ArithNode> count, std::unique_ptr<AST> ast) 
+    : count(std::move(count)), ast(std::move(ast)) { }
 
   void execute(Context& ctx) const
   {
     int cnt = count->evaluate();
     for(int i = 0; i < cnt; i++)
       ast->execute(ctx); 
-  }
-
-  ~STRep() 
-  {
-    delete count;
-    delete ast;
   }
 
 };

@@ -4,28 +4,24 @@
 #include "arithnode.hpp"
 #include <ostream>
 
-/** Calculation node always returning a constant value. */
+/** Node always returning a constant value. */
 class NConstant : public ArithNode
 {
-  /// the constant value returned
+
+private:
+  // the constant value returned
   int	value;
 
-  public:
-  /// construct a constant calculation node from a value
-  explicit NConstant(int _value)
-    : ArithNode(), value(_value)
-  {
-  }
+public:
+  // construct a constant calculation node from a value
+  explicit NConstant(int value)
+    : ArithNode(), value(value) { }
 
   virtual int evaluate() const
   {
     return value;
   }
 
-  virtual void print(std::ostream &os, unsigned int depth) const
-  {
-    os << indent(depth) << value << std::endl;
-  }
 };
 
 #endif

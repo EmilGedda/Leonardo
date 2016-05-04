@@ -150,7 +150,8 @@ unaryexpr: atomexpr
 	    }
         | MINUS atomexpr
         {
-		    $$ = new NNegate($2);
+            std::unique_ptr<ArithNode> node($2);
+		    $$ = new NNegate(std::move(node));
 	    }
 
 mulexpr: unaryexpr
@@ -159,11 +160,15 @@ mulexpr: unaryexpr
 	    }
         | mulexpr MUL unaryexpr
         {
-	        $$ = new NMultiply($1, $3);
+            std::unique_ptr<ArithNode> node1($1);
+            std::unique_ptr<ArithNode> node2($3);
+	        $$ = new NMultiply(std::move(node1), std::move(node2));
 	    }
         | mulexpr DIV unaryexpr
         {
-	        $$ = new NDivide($1, $3);
+            std::unique_ptr<ArithNode> node1($1);
+            std::unique_ptr<ArithNode> node2($3);
+	        $$ = new NDivide(std::move(node1), std::move(node2));
 	    }
 
 addexpr: mulexpr
@@ -172,11 +177,15 @@ addexpr: mulexpr
 	    }
         | addexpr PLUS mulexpr
         {
-	        $$ = new NAdd($1, $3);
+            std::unique_ptr<ArithNode> node1($1);
+            std::unique_ptr<ArithNode> node2($3);
+	        $$ = new NAdd(std::move(node1), std::move(node2));
 	    }
         | addexpr MINUS mulexpr
         {
-	        $$ = new NSubtract($1, $3);
+            std::unique_ptr<ArithNode> node1($1);
+            std::unique_ptr<ArithNode> node2($3);
+	        $$ = new NSubtract(std::move(node1), std::move(node2));
 	    }
 
 expr: addexpr 
@@ -184,22 +193,29 @@ expr: addexpr
 	        $$ = $1;
 	    }
 
-stmt: REP expr 
+stmt: REP expr /* BEFORE THE REP BLOCK */
         {
-            driver.ctx.ast.push(new AST());
-        } repcont
+            /* Push a new AST to the current context stack*/
+            std::unique_ptr<AST> ast(new AST());
+            driver.ctx.ast.push(std::move(ast));
+        } repcont /* AFTER THE REP BLOCK */
         {
-            auto s = driver.ctx.ast.top();
+            /* Pop the stack and add it to the rep */
+            std::unique_ptr<AST> s = std::move(driver.ctx.ast.top());
             driver.ctx.ast.pop();
-            $$ = new STRep($2, s);
+            std::unique_ptr<ArithNode> node($2);
+            $$ = new STRep(std::move(node), std::move(s));
         }
         | FORW expr DOT
         {
-            $$ = new STForw($2);
+            std::unique_ptr<ArithNode> node($2);
+            $$ = new STForw(std::move(node));
         }
         | BACK expr DOT
         {
-            $$ = new STForw(new NNegate($2));
+            std::unique_ptr<ArithNode> node($2);
+            std::unique_ptr<NNegate> neg(new NNegate(std::move(node))); 
+            $$ = new STForw(std::move(neg));
         }
         | DOWN DOT
         {
@@ -211,11 +227,14 @@ stmt: REP expr
         }
         | LEFT expr DOT
         {
-            $$ = new STLeft($2);
+            std::unique_ptr<ArithNode> node($2);
+            $$ = new STLeft(std::move(node));
         }
         | RIGHT expr DOT
         {
-            $$ = new STLeft(new NNegate($2));
+            std::unique_ptr<ArithNode> node($2);
+            std::unique_ptr<NNegate> neg(new NNegate(std::move(node))); 
+            $$ = new STLeft(std::move(neg));
         }
         | COLOR HEX DOT
         {
@@ -237,17 +256,20 @@ repcont: QUOTE block QUOTE
         }
         | stmt 
         {
-            driver.ctx.ast.top()->add($1);
+            std::unique_ptr<Statement> statement($1);
+            driver.ctx.ast.top()->add(std::move(statement));
         }
 
 
 block: block stmt
         {
-	        driver.ctx.ast.top()->add($2);
+            std::unique_ptr<Statement> statement($2);
+	        driver.ctx.ast.top()->add(std::move(statement));
 	    }
         | stmt
         {
-	        driver.ctx.ast.top()->add($1);
+            std::unique_ptr<Statement> statement($1);
+	        driver.ctx.ast.top()->add(std::move(statement));
 	    }
 
 start: /* empty file is valid aswell */

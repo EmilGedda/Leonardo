@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
       if (result)
       {
 
-        auto s = ctx.ast.top();
+        auto s = std::move(ctx.ast.top());
         s->execute(ctx);
       }
 

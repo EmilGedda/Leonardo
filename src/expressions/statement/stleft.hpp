@@ -6,22 +6,20 @@
 #include "../../context.hpp"
 
 #include <memory>
-#include <string>
 
-class STLeft : public Statement {
+// A LEFT statement. A right statement is simulated using a negative deg param
+class STLeft : public Statement 
+{
+
 private:
-  ArithNode* deg;
+  std::unique_ptr<ArithNode> deg;
 
 public:
-  explicit STLeft(ArithNode* deg) : deg(deg) { }
+  explicit STLeft(std::unique_ptr<ArithNode> deg) : deg(std::move(deg)) { }
 
   void execute(Context& ctx) const
   {
     ctx.turtle().left(deg->evaluate());
-  }
-
-  ~STLeft() {
-    delete deg;
   }
 
 };

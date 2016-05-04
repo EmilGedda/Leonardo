@@ -2,40 +2,28 @@
 #define NSUBTRACT_HPP
 
 #include "arithnode.hpp"
-#include <ostream>
+#include <memory>
 
-/** Calculation node subtracting two operand nodes. */
+/** Node subtracting two operand nodes. */
 class NSubtract : public ArithNode
 {
-  /// left calculation operand
-  ArithNode* 	left;
 
-  /// right calculation operand
-  ArithNode* 	right;
+private:
+  // left operand
+  std::unique_ptr<ArithNode> left;
 
-  public:
-  explicit NSubtract(ArithNode* _left, ArithNode* _right)
-    : ArithNode(), left(_left), right(_right)
-  {
-  }
+  // right operand
+  std::unique_ptr<ArithNode> right;
 
-  virtual ~NSubtract()
-  {
-    delete left;
-    delete right;
-  }
+public:
+  explicit NSubtract(std::unique_ptr<ArithNode> left, std::unique_ptr<ArithNode> right)
+    : ArithNode(), left(std::move(left)), right(std::move(right)) { }
 
   virtual int evaluate() const
   {
     return left->evaluate() - right->evaluate();
   }
 
-  virtual void print(std::ostream &os, unsigned int depth) const
-  {
-    os << indent(depth) << "- subtract" << std::endl;
-    left->print(os, depth+1);
-    right->print(os, depth+1);
-  }
 };
 
 #endif

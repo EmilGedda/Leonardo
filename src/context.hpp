@@ -6,6 +6,7 @@
 #include <ostream>
 #include <stdexcept>
 #include <stack>
+#include <memory>
 
 #include "expressions/statement/statement.hpp"
 #include "turtle/turtle.hpp"
@@ -25,7 +26,7 @@ public:
 
   Context(std::unique_ptr<Writer> w) : leonardo(std::move(w))
   {
-    ast.push(new AST());
+    ast.push(std::unique_ptr<AST>(new AST()));
   }
 
   Turtle& turtle()
@@ -35,15 +36,9 @@ public:
 
   /// array of unassigned expressions found by the parser. these are then
   /// outputted to the user.
-  std::stack<AST*> ast;
+  std::stack<std::unique_ptr<AST>> ast;
 
-  /// free the saved expression trees
-  ~Context()
-  {
-    delete ast.top();
-    ast.pop();
-  }
-
+  /// free the saved expression trees TODO?
 
   /// check if the given variable name exists in the storage
   bool variable_exists(const std::string &varname) const

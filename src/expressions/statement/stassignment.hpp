@@ -8,9 +8,14 @@
 #include <memory>
 #include <string>
 
-class STAssignment : public Statement {
+class STAssignment : public Statement
+{
+
 private:
+  // name of the variable to assign
   std::string variable;
+
+  // right hand side of an assignment
   std::unique_ptr<ArithNode> arith;
 
 public:

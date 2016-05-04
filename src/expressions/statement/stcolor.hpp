@@ -7,7 +7,10 @@
 #include <memory>
 #include <string>
 
-class STColor : public Statement {
+// a color statement.
+class STColor : public Statement
+{
+
 private:
   std::string color;
 

@@ -2,40 +2,29 @@
 #define NADD_HPP
 
 #include "arithnode.hpp"
-#include <ostream>
-/** Calculation node adding two operand nodes. */
+#include <memory>
 
+/** Node responsible for adding two operand nodes. */
 class NAdd : public ArithNode
 {
-  /// left calculation operand
-  ArithNode* 	left;
 
-  /// right calculation operand
-  ArithNode* 	right;
+private:
+  // left calculation operand
+  std::unique_ptr<ArithNode> left;
 
-  public:
-  explicit NAdd(ArithNode* _left, ArithNode* _right)
-    : ArithNode(), left(_left), right(_right)
-  {
-  }
+  // right calculation operand
+  std::unique_ptr<ArithNode> right;
 
-  virtual ~NAdd()
-  {
-    delete left;
-    delete right;
-  }
+public: 
+  // Explicit default constructor wanted, we dont want any converting
+  explicit NAdd(std::unique_ptr<ArithNode> left, std::unique_ptr<ArithNode> right)
+    : ArithNode(), left(std::move(left)), right(std::move(right)) { }
 
   virtual int evaluate() const
-  {
+  { 
     return left->evaluate() + right->evaluate();
   }
 
-  virtual void print(std::ostream &os, unsigned int depth) const
-  {
-    os << indent(depth) << "+ add" << std::endl;
-    left->print(os, depth+1);
-    right->print(os, depth+1);
-  }
 };
 
 #endif

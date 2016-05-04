@@ -8,21 +8,21 @@
 
 #include <memory>
 #include <string>
+#include <ostream>
+// forward statement (FORW X.) 
+// A backwards movement is simply a STForw(NNegate(node))
+class STForw : public Statement
+{
 
-class STForw : public Statement {
 private:
-  ArithNode* steps;
+  std::unique_ptr<ArithNode> steps;
 
 public:
-  explicit STForw(ArithNode* steps) : steps(steps) { }
+  explicit STForw(std::unique_ptr<ArithNode> steps) : steps(std::move(steps)) { }
 
   void execute(Context& ctx) const
   {
     ctx.turtle().forward(steps->evaluate());
-  }
-
-  ~STForw() {
-    delete steps;
   }
 
 };

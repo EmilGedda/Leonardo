@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
   std::unique_ptr<Writer> writer(new SVG());
   Context ctx(std::move(writer));
 
-  example::Driver driver(ctx);
+  logo::Driver driver(ctx);
   bool readfile = false;
 
   for(int ai = 1; ai < argc; ++ai)

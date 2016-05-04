@@ -1,6 +1,3 @@
-/* $Id$ -*- mode: c++ -*- */
-/** \file scanner.ll Define the example Flex lexical scanner */
-
 %{ /*** C/C++ Declarations ***/
 
 #include <string>
@@ -8,8 +5,8 @@
 #include "scanner.hpp"
 
 /* import the parser's token type into a local typedef */
-typedef example::Parser::token token;
-typedef example::Parser::token_type token_type;
+typedef logo::Parser::token token;
+typedef logo::Parser::token_type token_type;
 
 /* By default yylex returns int, we use token_type. Unfortunately yyterminate
  * by default returns 0, which is not of token_type. */
@@ -36,9 +33,6 @@ typedef example::Parser::token_type token_type;
 %% /*** Regular Expressions Part ***/
 
  /* code to place at the beginning of yylex() */
-
-
- /*** BEGIN EXAMPLE - Change the example lexer rules below ***/
 
 "%".* {
     yylloc->step();
@@ -143,7 +137,7 @@ typedef example::Parser::token_type token_type;
 
 %% /*** Additional Code ***/
 
-namespace example {
+namespace logo {
 
 Scanner::Scanner(std::istream* in,
 		 std::ostream* out)

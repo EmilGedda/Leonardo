@@ -9,10 +9,10 @@
 #ifndef YY_DECL
 
 #define	YY_DECL						\
-    example::Parser::token_type				\
-    example::Scanner::lex(				\
-	example::Parser::semantic_type* yylval,		\
-	example::Parser::location_type* yylloc		\
+    logo::Parser::token_type				\
+    logo::Scanner::lex(				\
+	logo::Parser::semantic_type* yylval,		\
+	logo::Parser::location_type* yylloc		\
     )
 #endif
 
@@ -24,7 +24,7 @@
 
 #include "parser.hpp"
 
-namespace example {
+namespace logo {
 
 /** Scanner is a derived class to add some extra function to the scanner
  * class. Flex itself creates a class named yyFlexLexer, which is renamed using
@@ -55,6 +55,6 @@ public:
     void set_debug(bool b);
 };
 
-} // namespace example
+} // namespace logo
 
 #endif // EXAMPLE_SCANNER_H

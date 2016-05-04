@@ -31,10 +31,10 @@
 // version 2.2 of Bison.
 
 // Take the name prefix into account.
-#define yylex   examplelex
+#define yylex   logolex
 
 // First part of user declarations.
-#line 4 "parser.yy" // lalr1.cc:404
+#line 1 "parser.yy" // lalr1.cc:404
  /*** C/C++ Declarations ***/
 
 #include <stdio.h>
@@ -63,7 +63,7 @@
 #include "parser.hpp"
 
 // User implementation prologue.
-#line 104 "parser.yy" // lalr1.cc:412
+#line 101 "parser.yy" // lalr1.cc:412
 
 
 #include "driver.hpp"
@@ -161,7 +161,7 @@
 #define YYRECOVERING()  (!!yyerrstatus_)
 
 
-namespace example {
+namespace logo {
 #line 166 "parser.cc" // lalr1.cc:479
 
   /* Return YYSTR after stripping away unnecessary quotes and
@@ -413,63 +413,63 @@ namespace example {
     {
             case 5: // "string"
 
-#line 100 "parser.yy" // lalr1.cc:614
+#line 97 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.stringVal); }
 #line 419 "parser.cc" // lalr1.cc:614
         break;
 
       case 23: // "hexcode"
 
-#line 100 "parser.yy" // lalr1.cc:614
+#line 97 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.stringVal); }
 #line 426 "parser.cc" // lalr1.cc:614
         break;
 
       case 25: // constant
 
-#line 101 "parser.yy" // lalr1.cc:614
+#line 98 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.node); }
 #line 433 "parser.cc" // lalr1.cc:614
         break;
 
       case 26: // variable
 
-#line 101 "parser.yy" // lalr1.cc:614
+#line 98 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.node); }
 #line 440 "parser.cc" // lalr1.cc:614
         break;
 
       case 27: // atomexpr
 
-#line 102 "parser.yy" // lalr1.cc:614
+#line 99 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.node); }
 #line 447 "parser.cc" // lalr1.cc:614
         break;
 
       case 28: // unaryexpr
 
-#line 102 "parser.yy" // lalr1.cc:614
+#line 99 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.node); }
 #line 454 "parser.cc" // lalr1.cc:614
         break;
 
       case 29: // mulexpr
 
-#line 102 "parser.yy" // lalr1.cc:614
+#line 99 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.node); }
 #line 461 "parser.cc" // lalr1.cc:614
         break;
 
       case 30: // addexpr
 
-#line 102 "parser.yy" // lalr1.cc:614
+#line 99 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.node); }
 #line 468 "parser.cc" // lalr1.cc:614
         break;
 
       case 31: // expr
 
-#line 102 "parser.yy" // lalr1.cc:614
+#line 99 "parser.yy" // lalr1.cc:614
         { delete (yysym.value.node); }
 #line 475 "parser.cc" // lalr1.cc:614
         break;
@@ -603,7 +603,7 @@ namespace example {
 
 
     // User initialization code.
-    #line 47 "parser.yy" // lalr1.cc:741
+    #line 44 "parser.yy" // lalr1.cc:741
 {
     // initialize the initial location object
     yyla.location.begin.filename = yyla.location.end.filename = &driver.streamname;
@@ -717,7 +717,7 @@ namespace example {
           switch (yyn)
             {
   case 2:
-#line 120 "parser.yy" // lalr1.cc:859
+#line 117 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = new NConstant((yystack_[0].value.integerVal));
 	    }
@@ -725,7 +725,7 @@ namespace example {
     break;
 
   case 3:
-#line 125 "parser.yy" // lalr1.cc:859
+#line 122 "parser.yy" // lalr1.cc:859
     {
             (yylhs.value.node) = new NVariable(*(yystack_[0].value.stringVal), driver.ctx);
             delete (yystack_[0].value.stringVal);
@@ -734,7 +734,7 @@ namespace example {
     break;
 
   case 4:
-#line 131 "parser.yy" // lalr1.cc:859
+#line 128 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = (yystack_[0].value.node);
 	    }
@@ -742,7 +742,7 @@ namespace example {
     break;
 
   case 5:
-#line 135 "parser.yy" // lalr1.cc:859
+#line 132 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = (yystack_[0].value.node);
 	    }
@@ -750,7 +750,7 @@ namespace example {
     break;
 
   case 6:
-#line 139 "parser.yy" // lalr1.cc:859
+#line 136 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = (yystack_[1].value.node);
 	    }
@@ -758,7 +758,7 @@ namespace example {
     break;
 
   case 7:
-#line 144 "parser.yy" // lalr1.cc:859
+#line 141 "parser.yy" // lalr1.cc:859
     {
 		    (yylhs.value.node) = (yystack_[0].value.node);
 	    }
@@ -766,7 +766,7 @@ namespace example {
     break;
 
   case 8:
-#line 148 "parser.yy" // lalr1.cc:859
+#line 145 "parser.yy" // lalr1.cc:859
     {
 		    (yylhs.value.node) = (yystack_[0].value.node);
 	    }
@@ -774,7 +774,7 @@ namespace example {
     break;
 
   case 9:
-#line 152 "parser.yy" // lalr1.cc:859
+#line 149 "parser.yy" // lalr1.cc:859
     {
             std::unique_ptr<ArithNode> node((yystack_[0].value.node));
 		    (yylhs.value.node) = new NNegate(std::move(node));
@@ -783,7 +783,7 @@ namespace example {
     break;
 
   case 10:
-#line 158 "parser.yy" // lalr1.cc:859
+#line 155 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = (yystack_[0].value.node);
 	    }
@@ -791,7 +791,7 @@ namespace example {
     break;
 
   case 11:
-#line 162 "parser.yy" // lalr1.cc:859
+#line 159 "parser.yy" // lalr1.cc:859
     {
             std::unique_ptr<ArithNode> node1((yystack_[2].value.node));
             std::unique_ptr<ArithNode> node2((yystack_[0].value.node));
@@ -801,7 +801,7 @@ namespace example {
     break;
 
   case 12:
-#line 168 "parser.yy" // lalr1.cc:859
+#line 165 "parser.yy" // lalr1.cc:859
     {
             std::unique_ptr<ArithNode> node1((yystack_[2].value.node));
             std::unique_ptr<ArithNode> node2((yystack_[0].value.node));
@@ -811,7 +811,7 @@ namespace example {
     break;
 
   case 13:
-#line 175 "parser.yy" // lalr1.cc:859
+#line 172 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = (yystack_[0].value.node);
 	    }
@@ -819,7 +819,7 @@ namespace example {
     break;
 
   case 14:
-#line 179 "parser.yy" // lalr1.cc:859
+#line 176 "parser.yy" // lalr1.cc:859
     {
             std::unique_ptr<ArithNode> node1((yystack_[2].value.node));
             std::unique_ptr<ArithNode> node2((yystack_[0].value.node));
@@ -829,7 +829,7 @@ namespace example {
     break;
 
   case 15:
-#line 185 "parser.yy" // lalr1.cc:859
+#line 182 "parser.yy" // lalr1.cc:859
     {
             std::unique_ptr<ArithNode> node1((yystack_[2].value.node));
             std::unique_ptr<ArithNode> node2((yystack_[0].value.node));
@@ -839,7 +839,7 @@ namespace example {
     break;
 
   case 16:
-#line 192 "parser.yy" // lalr1.cc:859
+#line 189 "parser.yy" // lalr1.cc:859
     {
 	        (yylhs.value.node) = (yystack_[0].value.node);
 	    }
@@ -847,7 +847,7 @@ namespace example {
     break;
 
   case 17:
-#line 197 "parser.yy" // lalr1.cc:859
+#line 194 "parser.yy" // lalr1.cc:859
     {
             /* Push a new AST to the current context stack*/
             std::unique_ptr<AST> ast(new AST());
@@ -857,7 +857,7 @@ namespace example {
     break;
 
   case 18:
-#line 202 "parser.yy" // lalr1.cc:859
+#line 199 "parser.yy" // lalr1.cc:859
     {
             /* Pop the stack and add it to the rep */
             std::unique_ptr<AST> s = std::move(driver.ctx.ast.top());
@@ -869,7 +869,7 @@ namespace example {
     break;
 
   case 19:
-#line 210 "parser.yy" // lalr1.cc:859
+#line 207 "parser.yy" // lalr1.cc:859
     {
             std::unique_ptr<ArithNode> node((yystack_[1].value.node));
             (yylhs.value.statement) = new STForw(std::move(node));
@@ -878,7 +878,7 @@ namespace example {
     break;
 
   case 20:
-#line 215 "parser.yy" // lalr1.cc:859
+#line 212 "parser.yy" // lalr1.cc:859
     {
             std::unique_ptr<ArithNode> node((yystack_[1].value.node));
             std::unique_ptr<NNegate> neg(new NNegate(std::move(node))); 
@@ -888,7 +888,7 @@ namespace example {
     break;
 
   case 21:
-#line 221 "parser.yy" // lalr1.cc:859
+#line 218 "parser.yy" // lalr1.cc:859
     {
             (yylhs.value.statement) = new STPen(1);
         }
@@ -896,7 +896,7 @@ namespace example {
     break;
 
   case 22:
-#line 225 "parser.yy" // lalr1.cc:859
+#line 222 "parser.yy" // lalr1.cc:859
     {
             (yylhs.value.statement) = new STPen(0);
         }
@@ -904,7 +904,7 @@ namespace example {
     break;
 
   case 23:
-#line 229 "parser.yy" // lalr1.cc:859
+#line 226 "parser.yy" // lalr1.cc:859
     {
             std::unique_ptr<ArithNode> node((yystack_[1].value.node));
             (yylhs.value.statement) = new STLeft(std::move(node));
@@ -913,7 +913,7 @@ namespace example {
     break;
 
   case 24:
-#line 234 "parser.yy" // lalr1.cc:859
+#line 231 "parser.yy" // lalr1.cc:859
     {
             std::unique_ptr<ArithNode> node((yystack_[1].value.node));
             std::unique_ptr<NNegate> neg(new NNegate(std::move(node))); 
@@ -923,7 +923,7 @@ namespace example {
     break;
 
   case 25:
-#line 240 "parser.yy" // lalr1.cc:859
+#line 237 "parser.yy" // lalr1.cc:859
     {
             (yylhs.value.statement) = new STColor(*(yystack_[1].value.stringVal));
             delete (yystack_[1].value.stringVal);
@@ -932,7 +932,7 @@ namespace example {
     break;
 
   case 26:
-#line 245 "parser.yy" // lalr1.cc:859
+#line 242 "parser.yy" // lalr1.cc:859
     {
             /* SEGFAULT SWAMP */
             std::unique_ptr<ArithNode> node((yystack_[1].value.node));
@@ -944,7 +944,7 @@ namespace example {
     break;
 
   case 27:
-#line 254 "parser.yy" // lalr1.cc:859
+#line 251 "parser.yy" // lalr1.cc:859
     {
         
         }
@@ -952,7 +952,7 @@ namespace example {
     break;
 
   case 28:
-#line 258 "parser.yy" // lalr1.cc:859
+#line 255 "parser.yy" // lalr1.cc:859
     {
             std::unique_ptr<Statement> statement((yystack_[0].value.statement));
             driver.ctx.ast.top()->add(std::move(statement));
@@ -961,7 +961,7 @@ namespace example {
     break;
 
   case 29:
-#line 265 "parser.yy" // lalr1.cc:859
+#line 262 "parser.yy" // lalr1.cc:859
     {
             std::unique_ptr<Statement> statement((yystack_[0].value.statement));
 	        driver.ctx.ast.top()->add(std::move(statement));
@@ -970,7 +970,7 @@ namespace example {
     break;
 
   case 30:
-#line 270 "parser.yy" // lalr1.cc:859
+#line 267 "parser.yy" // lalr1.cc:859
     {
             std::unique_ptr<Statement> statement((yystack_[0].value.statement));
 	        driver.ctx.ast.top()->add(std::move(statement));
@@ -1348,10 +1348,10 @@ namespace example {
   const unsigned short int
   Parser::yyrline_[] =
   {
-       0,   119,   119,   124,   130,   134,   138,   143,   147,   151,
-     157,   161,   167,   174,   178,   184,   191,   197,   196,   209,
-     214,   220,   224,   228,   233,   239,   244,   253,   257,   264,
-     269,   275,   276
+       0,   116,   116,   121,   127,   131,   135,   140,   144,   148,
+     154,   158,   164,   171,   175,   181,   188,   194,   193,   206,
+     211,   217,   221,   225,   230,   236,   241,   250,   254,   261,
+     266,   272,   273
   };
 
   // Print the state stack on the debug stream.
@@ -1433,12 +1433,12 @@ namespace example {
   }
 
 
-} // example
+} // logo
 #line 1438 "parser.cc" // lalr1.cc:1167
-#line 280 "parser.yy" // lalr1.cc:1168
+#line 276 "parser.yy" // lalr1.cc:1168
  /*** Additional Code ***/
 
-void example::Parser::error(const Parser::location_type& l,
+void logo::Parser::error(const Parser::location_type& l,
 			    const std::string& m)
 {
     driver.error(l, m);

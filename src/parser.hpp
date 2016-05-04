@@ -32,13 +32,13 @@
 
 /**
  ** \file parser.hpp
- ** Define the example::parser class.
+ ** Define the logo::parser class.
  */
 
 // C++ LALR(1) parser skeleton written by Akim Demaille.
 
-#ifndef YY_EXAMPLE_PARSER_HPP_INCLUDED
-# define YY_EXAMPLE_PARSER_HPP_INCLUDED
+#ifndef YY_LOGO_PARSER_HPP_INCLUDED
+# define YY_LOGO_PARSER_HPP_INCLUDED
 
 
 # include <cstdlib> // std::abort
@@ -109,7 +109,7 @@
 #endif
 
 
-namespace example {
+namespace logo {
 #line 114 "parser.hpp" // lalr1.cc:377
 
 
@@ -124,7 +124,7 @@ namespace example {
     /// Symbol semantic values.
     union semantic_type
     {
-    #line 61 "parser.yy" // lalr1.cc:377
+    #line 58 "parser.yy" // lalr1.cc:377
 
     int                 integerVal;
     std::string*		stringVal;
@@ -495,10 +495,10 @@ namespace example {
 
 
 
-} // example
+} // logo
 #line 500 "parser.hpp" // lalr1.cc:377
 
 
 
 
-#endif // !YY_EXAMPLE_PARSER_HPP_INCLUDED
+#endif // !YY_LOGO_PARSER_HPP_INCLUDED

@@ -1,13 +1,10 @@
-// $Id$
-/** \file driver.cc Implementation of the example::Driver class. */
-
 #include <fstream>
 #include <sstream>
 
 #include "driver.hpp"
 #include "scanner.hpp"
 
-namespace example {
+namespace logo {
 
 Driver::Driver(class Context& ctx)
     : trace_scanning(false),
@@ -53,4 +50,4 @@ void Driver::error(const std::string& m)
     std::cerr << m << std::endl;
 }
 
-} // namespace example
+}

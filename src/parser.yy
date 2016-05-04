@@ -1,6 +1,3 @@
-/* $Id$ -*- mode: c++ -*- */
-/** \file parser.yy Contains the example Bison parser source */
-
 %{ /*** C/C++ Declarations ***/
 
 #include <stdio.h>
@@ -36,7 +33,7 @@
 %skeleton "lalr1.cc"
 
 /* namespace to enclose parser in */
-%name-prefix "example"
+%name-prefix "logo"
 
 /* set the parser's class identifier */
 %define "parser_class_name" {Parser}
@@ -275,11 +272,10 @@ block: block stmt
 start: /* empty file is valid aswell */
         | block 
         
- /*** END EXAMPLE - Change the example grammar rules above ***/
 
 %% /*** Additional Code ***/
 
-void example::Parser::error(const Parser::location_type& l,
+void logo::Parser::error(const Parser::location_type& l,
 			    const std::string& m)
 {
     driver.error(l, m);

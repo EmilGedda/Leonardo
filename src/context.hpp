@@ -12,7 +12,7 @@
 #include "turtle/turtle.hpp"
 #include "ast.hpp"
 /** Runtime context used to save the parsed expressions. This context is
- * passed along to the example::Driver class and fill during parsing via bison
+ * passed along to the logo::Driver class and fill during parsing via bison
  * actions. */
 class Context
 {

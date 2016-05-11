@@ -1,0 +1,135 @@
+===PROGP S4===
+
+Emil Gedda (egedda@kth.se)
+
+
+DESCRIPTION
+
+    My implementation of the Logo++ lab S4.
+    Written in C++ using bison as a parser generator (the grammar stuff),
+    and Flex as a tokenizer/lexical analyzer.
+
+    The core program is Flex tokenize:ing the input, and passing said tokens
+    to bison, which in turns construct our abstract syntax tree (AST) using
+    a specific set of grammar. Our AST is then executed using a Driver class.
+    An AST will be executed under a given context, which defines variables
+    and a turtle to operate upon.
+
+
+THE CODE
+
+    The code consists of 4 major parts
+        - The bison code
+        - The flex code
+        - The expressions and AST
+        - And the rest (Driver, Turtle, and Writers)
+
+
+    The user defined Bison code is located in src/parser.yy.
+    Bison allows of defining context-free grammar, and the ability to inline
+    code inside the grammar.
+
+    Lets take the grammar for a multiplication/division expression as an example
+
+    mulexpr: unaryexpr
+            {
+                $$ = $1;
+            }
+            | mulexpr MUL unaryexpr
+            {
+                std::unique_ptr<ArithNode> node1($1);
+                std::unique_ptr<ArithNode> node2($3);
+                $$ = new NMultiply(std::move(node1), std::move(node2));
+            }
+            | mulexpr DIV unaryexpr
+            {
+                std::unique_ptr<ArithNode> node1($1);
+                std::unique_ptr<ArithNode> node2($3);
+                $$ = new NDivide(std::move(node1), std::move(node2));
+            }
+
+    The bison grammar resembles BNF-grammar a fair bit, and the above grammar
+    may be rewritten into BNF as such:
+
+    mulexpr ::= unaryexpr | mulexpr MUL unaryexpr | mulexpr DIV unaryexpr
+
+    MUL and DIV are terminals (tokens) and mulexpr and unaryexpr are non-terminals.
+    
+    The block of curly braces { } denotes some code to be run after Bison has
+    successfully parsed a given grammar. 
+
+    A code block may be placed anywhere in the grammar. For example, in the REP
+    grammar a codeblock is placed before the parsing of the logo statements 
+    inside the REP to add a new AST on top of our AST stack, which then after //TODO: Rewrite
+    the REP is done being parsed is popped back and inserted into the STRep
+    instance. This allows for nesting of reps without any hassle.
+
+    Inside the code block, Bison exposes the parsed non-terminals as variables 
+    such as $1, $2, $3 ... and so on. The number after the $ corresponds to the
+    position of the non-terminal in the grammar. Thus, $1 and $3 in the above
+    example refers earlier parsed ArithNodes, infront and behind our MUL/DIV
+    token ($2 would simply refer to the string defined for the token MUL or DIV).
+    The $$ variable defines the "return" value of the grammar. Assigning a 
+    ArithNode to the value of the current parsed grammar, which bison then uses
+    in other grammars as $1, $2 ...
+
+    The priority rules of the arithmetic operators isn't defined anywhere
+    in the code. Our well defined grammar handles that automatically.
+
+
+NOTES
+
+    I was lazy and used std::unique_ptr everywhere, which takes care of
+    deleting new:ed variabled automatically, so I don't have to worry
+    about memory leaks.
+
+
+COMPILING
+
+    Prerequesites:
+        A ISO-compliant C++11 compiler (finns på skoldatorerna, gcc 4.9)
+        Some other stuff which every Linux-dist should have.
+        Also works under msys and bash on windows (if I remember correctly).
+
+        Otherwise, use the Ubuntu computers @ KTH.
+
+
+    Steps:
+        Make sure you are in the correct directory (the root of the project),
+        and not inside the src dir, and then run:
+        
+            ./configure
+            make
+
+        In bash or your favourite POSIX-shell.
+        This will create a executable called leonardo in the src dir.
+
+
+USAGE
+
+    Leonardo currently defaults to outputting SVG on stdout.
+    It does not do any PDF-converting (Austrin sa att det var lugnt att skippa SVG -> PDF)
+    Brackets denote optional parameters.
+
+    leonardo [-s] [-p] [-text] [FILE]
+
+        -s      Enables debugging in the Scanner (Flex)
+        -p      Enabled debugging in the Parser (Bison)
+                    Note: Debugging information will be printed on the stdout
+                    together with the output of the execute logo code.
+
+        -text   Sets the output format as defined by
+                the S2 lab, not really useful for anything. 
+                Without this flag, SVG is used instead.
+
+        FILE    The file containing logo-code which should be parsed.
+                If FILE is not present or none was given, leonardo simply 
+                reads the standard input (stdin) until an EOF is recieved.
+
+        For example:
+            
+            leonardo custom_test/custom1.txt > myfile.svg
+
+                This parses custom1.txt and then pipes the resulting output to
+                a file called myfile.svg which may then be viewed in any recent browser.
+

@@ -24,7 +24,7 @@ void SVG::init() {
 }
 
 void SVG::finalize() {
-  out << std::setprecision(10) << "<svg width=\"10cm\" height=\"10cm\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewBox=\"" + std::to_string(min_x*46-5) + " " + std::to_string(max_y*-46) + " " 
+  out << std::setprecision(10) << "<svg width=\"20cm\" height=\"20cm\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewBox=\"" + std::to_string(min_x*46-5) + " " + std::to_string(max_y*-46) + " " 
         + std::to_string((max_x - min_x)*46+5) + " " + std::to_string((max_y - min_y)*46) + "\">";
   out << std::endl << "    <g transform=\"scale(1,-1)\">" << std::endl;
   for(auto& s : lines)

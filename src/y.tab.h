@@ -9,5 +9,5 @@
  * source file "xyz.cc" still refers to the default "y.tab.h". The easiest
  * work-around is to use this forwarding include file. */
 
-#include "scanner.h"
+#include "scanner.hpp"
 

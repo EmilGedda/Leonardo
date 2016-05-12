@@ -1,0 +1,15 @@
+COLOR #0000FF.
+
+REP 100 "
+    UP.
+    LEFT 10.
+    FORW 20.
+    RIGHT 2.
+    BACK 25.
+    DOWN.
+
+    REP 10 "
+        LEFT 30.
+        FORW 5.
+    "
+"

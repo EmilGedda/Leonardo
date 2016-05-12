@@ -32,16 +32,16 @@
 
 /**
  ** \file stack.hh
- ** Define the example::stack class.
+ ** Define the logo::stack class.
  */
 
-#ifndef YY_EXAMPLE_STACK_HH_INCLUDED
-# define YY_EXAMPLE_STACK_HH_INCLUDED
+#ifndef YY_LOGO_STACK_HH_INCLUDED
+# define YY_LOGO_STACK_HH_INCLUDED
 
 # include <vector>
 
 
-namespace example {
+namespace logo {
 #line 46 "stack.hh" // stack.hh:132
   template <class T, class S = std::vector<T> >
   class stack
@@ -151,7 +151,7 @@ namespace example {
   };
 
 
-} // example
+} // logo
 #line 156 "stack.hh" // stack.hh:132
 
-#endif // !YY_EXAMPLE_STACK_HH_INCLUDED
+#endif // !YY_LOGO_STACK_HH_INCLUDED

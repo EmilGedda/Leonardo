@@ -2,8 +2,8 @@
 
 AC_PREREQ(2.59)
 
-AC_INIT([leonardo-logo-parser], [0.1.0])
-AC_CONFIG_SRCDIR([src/exprtest.cc])
+AC_INIT([leonardo-logo-parser], [1.0.0])
+AC_CONFIG_SRCDIR([src/main.cpp])
 AC_CONFIG_AUX_DIR([scripts])
 
 AM_INIT_AUTOMAKE

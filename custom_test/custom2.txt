@@ -1,0 +1,22 @@
+DOWN.
+turn = 20.
+acc = 10.
+REP 10 "
+    COLOR #0000FF.
+    turn = turn + 5.
+    COLOR #0000FF.
+    REP 10 "
+        LEFT turn.
+        FORW acc/3.
+        RIGHT turn/2.
+        BACK acc.
+        turn = turn +1.
+    "
+    acc = acc*acc/10.
+    COLOR #FF0000.
+    REP 10 "
+        RIGHT turn*2/3.
+        FORW acc/3.
+        turn = turn -1.
+    "
+"

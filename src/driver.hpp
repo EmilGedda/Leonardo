@@ -1,18 +1,15 @@
-// $Id$ 	
-/** \file driver.h Declaration of the example::Driver class. */
-
-#ifndef EXAMPLE_DRIVER_H
-#define EXAMPLE_DRIVER_H
+#ifndef LOGO_DRIVER_HPP
+#define LOGO_DRIVER_HPP
 
 #include <string>
 #include <vector>
 
 // forward declaration
-class CalcContext;
+class Context;
 
-/** The example namespace is used to encapsulate the three parser classes
- * example::Parser, example::Scanner and example::Driver */
-namespace example {
+/** The logo namespace is used to encapsulate the three parser classes
+ * logo::Parser, logo::Scanner and logo::Driver */
+namespace logo {
 
 /** The Driver class brings together all components. It creates an instance of
  * the Parser and Scanner classes and connects them. Then the input stream is
@@ -24,7 +21,7 @@ class Driver
 {
 public:
     /// construct a new parser driver context
-    Driver(class CalcContext& calc);
+    Driver(class Context& ctx);
 
     /// enable debug output in the flex scanner
     bool trace_scanning;
@@ -43,21 +40,6 @@ public:
     bool parse_stream(std::istream& in,
 		      const std::string& sname = "stream input");
 
-    /** Invoke the scanner and parser on an input string.
-     * @param input	input string
-     * @param sname	stream name for error messages
-     * @return		true if successfully parsed
-     */
-    bool parse_string(const std::string& input,
-		      const std::string& sname = "string stream");
-
-    /** Invoke the scanner and parser on a file. Use parse_stream with a
-     * std::ifstream if detection of file reading errors is required.
-     * @param filename	input file name
-     * @return		true if successfully parsed
-     */
-    bool parse_file(const std::string& filename);
-
     // To demonstrate pure handling of parse errors, instead of
     // simply dumping them on the standard error output, we will pass
     // them to the driver using the following two member functions.
@@ -74,11 +56,11 @@ public:
      * parser to the scanner. It is used in the yylex macro. */
     class Scanner* lexer;
 
-    /** Reference to the calculator context filled during parsing of the
+    /** Reference to the context filled during parsing of the
      * expressions. */
-    class CalcContext& calc;
+    class Context& ctx;
 };
 
-} // namespace example
+} 
 
-#endif // EXAMPLE_DRIVER_H
+#endif 

@@ -1,0 +1,31 @@
+
+COLOR #FF0000.
+DOWN.
+REP 5 "
+    REP 6 "
+        LEFT 60.
+        FORW 8.
+    "
+    RIGHT 60.
+"
+RIGHT 60.
+REP 20 "
+    COLOR #FF00FF.
+    FORW 2.
+    LEFT 18.
+    COLOR #000000.
+    REP 20 "
+        LEFT 18.
+        FORW 1.
+    "
+"
+REP 20 "
+    COLOR #00FFFF.
+    FORW 2.
+    RIGHT 18.
+    COLOR #000000.
+    REP 20 "
+        RIGHT 18.
+        FORW 1.
+    "
+"

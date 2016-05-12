@@ -31,14 +31,14 @@
 // version 2.2 of Bison.
 
 /**
- ** \file parser.h
- ** Define the example::parser class.
+ ** \file parser.hpp
+ ** Define the logo::parser class.
  */
 
 // C++ LALR(1) parser skeleton written by Akim Demaille.
 
-#ifndef YY_EXAMPLE_PARSER_H_INCLUDED
-# define YY_EXAMPLE_PARSER_H_INCLUDED
+#ifndef YY_LOGO_PARSER_HPP_INCLUDED
+# define YY_LOGO_PARSER_HPP_INCLUDED
 
 
 # include <cstdlib> // std::abort
@@ -109,8 +109,8 @@
 #endif
 
 
-namespace example {
-#line 114 "parser.h" // lalr1.cc:377
+namespace logo {
+#line 114 "parser.hpp" // lalr1.cc:377
 
 
 
@@ -124,14 +124,14 @@ namespace example {
     /// Symbol semantic values.
     union semantic_type
     {
-    #line 56 "parser.yy" // lalr1.cc:377
+    #line 58 "parser.yy" // lalr1.cc:377
 
-    int  			integerVal;
-    double 			doubleVal;
+    int                 integerVal;
     std::string*		stringVal;
-    class CalcNode*		calcnode;
+    class ArithNode*	node;
+    class Statement*    statement;
 
-#line 135 "parser.h" // lalr1.cc:377
+#line 135 "parser.hpp" // lalr1.cc:377
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -151,11 +151,28 @@ namespace example {
     {
       enum yytokentype
       {
-        END = 0,
-        EOL = 258,
-        INTEGER = 259,
-        DOUBLE = 260,
-        STRING = 261
+        TOKEN_END = 0,
+        TOKEN_EOL = 258,
+        TOKEN_INTEGER = 259,
+        TOKEN_STRING = 260,
+        TOKEN_LPAR = 261,
+        TOKEN_RPAR = 262,
+        TOKEN_DOT = 263,
+        TOKEN_EQ = 264,
+        TOKEN_PLUS = 265,
+        TOKEN_MINUS = 266,
+        TOKEN_MUL = 267,
+        TOKEN_DIV = 268,
+        TOKEN_FORW = 269,
+        TOKEN_BACK = 270,
+        TOKEN_UP = 271,
+        TOKEN_DOWN = 272,
+        TOKEN_LEFT = 273,
+        TOKEN_RIGHT = 274,
+        TOKEN_COLOR = 275,
+        TOKEN_REP = 276,
+        TOKEN_QUOTE = 277,
+        TOKEN_HEX = 278
       };
     };
 
@@ -343,7 +360,7 @@ namespace example {
   // number is the opposite.  If YYTABLE_NINF, syntax error.
   static const unsigned char yytable_[];
 
-  static const unsigned char yycheck_[];
+  static const signed char yycheck_[];
 
   // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
   // symbol of state STATE-NUM.
@@ -364,7 +381,7 @@ namespace example {
     static const char* const yytname_[];
 #if YYDEBUG
   // YYRLINE[YYN] -- Source line where rule number YYN was defined.
-  static const unsigned char yyrline_[];
+  static const unsigned short int yyrline_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.
     virtual void yy_reduce_print_ (int r);
     /// Print the state stack on the debug stream.
@@ -463,12 +480,12 @@ namespace example {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 42,     ///< Last index in yytable_.
-      yynnts_ = 11,  ///< Number of nonterminal symbols.
-      yyfinal_ = 2, ///< Termination state number.
+      yylast_ = 69,     ///< Last index in yytable_.
+      yynnts_ = 13,  ///< Number of nonterminal symbols.
+      yyfinal_ = 34, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 17  ///< Number of tokens.
+      yyntokens_ = 24  ///< Number of tokens.
     };
 
 
@@ -478,10 +495,10 @@ namespace example {
 
 
 
-} // example
-#line 483 "parser.h" // lalr1.cc:377
+} // logo
+#line 500 "parser.hpp" // lalr1.cc:377
 
 
 
 
-#endif // !YY_EXAMPLE_PARSER_H_INCLUDED
+#endif // !YY_LOGO_PARSER_HPP_INCLUDED

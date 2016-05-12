@@ -12,3 +12,5 @@ configure
 configure.scan
 Makefile
 Makefile.in
+**/*gch
+**/*.a

@@ -1,0 +1,14 @@
+% Space runt punkt valfritt.
+DOWN . UP.DOWN. DOWN.
+% Rader kan vara tomma
+% radbrytning/space/tabb för
+% att göra koden mer läslig.
+REP 3 "COLOR #FF0000.
+    FORW 1. LEFT 10.
+    COLOR #000000.
+    FORW 2. LEFT 20."
+% Eller oläslig
+COLOR
+% färgval på gång
+#111111.
+REP 1 BACK 1.

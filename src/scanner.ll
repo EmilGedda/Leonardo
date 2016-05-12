@@ -1,46 +1,28 @@
-/* $Id$ -*- mode: c++ -*- */
-/** \file scanner.ll Define the example Flex lexical scanner */
-
 %{ /*** C/C++ Declarations ***/
 
 #include <string>
-
-#include "scanner.h"
+#include <stdio.h>
+#include "scanner.hpp"
 
 /* import the parser's token type into a local typedef */
-typedef example::Parser::token token;
-typedef example::Parser::token_type token_type;
+typedef logo::Parser::token token;
+typedef logo::Parser::token_type token_type;
 
 /* By default yylex returns int, we use token_type. Unfortunately yyterminate
  * by default returns 0, which is not of token_type. */
-#define yyterminate() return token::END
+#define yyterminate() return token::TOKEN_END
 
 /* This disables inclusion of unistd.h, which is not available under Visual C++
  * on Win32. The C++ scanner uses STL streams instead. */
-#define YY_NO_UNISTD_H
-
 %}
 
 /*** Flex Declarations and Options ***/
-
+%option debug batch
 /* enable c++ scanner class generation */
 %option c++
 
 /* change the name of the scanner class. results in "ExampleFlexLexer" */
 %option prefix="Example"
-
-/* the manual says "somewhat more optimized" */
-%option batch
-
-/* enable scanner to generate debug output. disable this for release
- * versions. */
-%option debug
-
-/* no support for include files is planned */
-%option yywrap nounput 
-
-/* enables the use of start condition stacks */
-%option stack
 
 /* The following paragraph suffices to track locations accurately. Each time
  * yylex is invoked, the begin position is moved onto the end position. */
@@ -51,49 +33,111 @@ typedef example::Parser::token_type token_type;
 %% /*** Regular Expressions Part ***/
 
  /* code to place at the beginning of yylex() */
-%{
-    // reset location
-    yylloc->step();
-%}
 
- /*** BEGIN EXAMPLE - Change the example lexer rules below ***/
+"%".* {
+    yylloc->step();
+}
+
+"FORW" {
+    return token::TOKEN_FORW;
+}
+
+"BACK" {
+    return token::TOKEN_BACK;
+}
+
+"UP" {
+    return token::TOKEN_UP;
+}
+
+"DOWN" {
+    return token::TOKEN_DOWN;
+}
+
+"LEFT" {
+    return token::TOKEN_LEFT;
+}
+
+"RIGHT" {
+    return token::TOKEN_RIGHT;
+}
+
+"COLOR" {
+    return token::TOKEN_COLOR;
+}
+
+"REP" {
+    return token::TOKEN_REP;
+}
+
+"\"" {
+    return token::TOKEN_QUOTE;
+}
+
+"#"[0-9A-F]{6} {
+    yylval->stringVal = new std::string(yytext, yyleng);
+    return token::TOKEN_HEX;
+}
+
+"+" {
+    return token::TOKEN_PLUS;
+}
+
+"-" {
+    return token::TOKEN_MINUS;
+}
+
+"*" {
+    return token::TOKEN_MUL;
+}
+
+"/" {
+    return token::TOKEN_DIV;
+}
+
+"=" {
+    return token::TOKEN_EQ;
+}
+
+"(" {
+    return token::TOKEN_LPAR;
+}
+
+")" {
+    return token::TOKEN_RPAR;
+}
+
+"." {
+    return token::TOKEN_DOT;
+}
 
 [0-9]+ {
     yylval->integerVal = atoi(yytext);
-    return token::INTEGER;
+    return token::TOKEN_INTEGER;
 }
 
-[0-9]+"."[0-9]* {
-    yylval->doubleVal = atof(yytext);
-    return token::DOUBLE;
-}
-
-[A-Za-z][A-Za-z0-9_,.-]* {
+[A-Z][A-Z0-9_]* {
     yylval->stringVal = new std::string(yytext, yyleng);
-    return token::STRING;
+    return token::TOKEN_STRING;
 }
 
+ /* gobble up end-of-lines */
+\n {
+    yylloc->lines(yyleng); 
+    yylloc->step();
+}
  /* gobble up white-spaces */
 [ \t\r]+ {
     yylloc->step();
 }
 
- /* gobble up end-of-lines */
-\n {
-    yylloc->lines(yyleng); yylloc->step();
-    return token::EOL;
-}
-
- /* pass all other characters up to bison */
 . {
     return static_cast<token_type>(*yytext);
 }
 
- /*** END EXAMPLE - Change the example lexer rules above ***/
-
 %% /*** Additional Code ***/
 
-namespace example {
+namespace logo {
 
 Scanner::Scanner(std::istream* in,
 		 std::ostream* out)

@@ -1,0 +1,4 @@
+DOWN.
+FORW 20.
+REP 2 "".
+LEFT 10.

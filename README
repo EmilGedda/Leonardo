@@ -16,6 +16,50 @@ DESCRIPTION
     and a turtle to operate upon.
 
 
+FILES
+
+    Every code-related file resides in the src/ directory.
+
+    expression/:    The expression folder contains all statements and
+                    expressions used by the parser.
+
+    turtle/:        The turtle folder contains the turtle specific logic
+
+    writers/:       Contains the code related to outputting the images in
+                    different formats such as SVG.
+    
+    writer.hpp:     An abstract interface for all the writers.
+
+    test/:          The sample leonardo++ code provided.
+
+    ast.hpp         A simple container class for an abstract syntax tree
+    
+    context.hpp     Runtime context which stores expressions and statements
+                    inside a AST.
+    
+    driver.{h,c}pp  Connect the scanner and the parser together with streams
+    
+    main.cpp        The main-file parsing arguments and such
+    
+    parser.yy       This Bison related file contains the grammar for the language
+    
+    scanner.ll      Flex related code. The regex's for tokenization of string
+                    to tokens which Bison then collects and parses.
+
+
+    BISON AUTO GENERATED FILES:
+        location.hh
+        parser.cc       The actual parser code generated from parser.yy
+        parser.hpp
+        position.hh
+        stack.hh
+        y.tab.h
+
+    FLEX AUTO GENERATED FILES:
+        FlexLexer.h     An example lexer provided by Flex
+        scanner.cc      A case insensitive lexer/scanner
+
+
 THE CODE
 
     The code consists of 4 major parts
@@ -60,7 +104,7 @@ THE CODE
 
     A code block may be placed anywhere in the grammar. For example, in the REP
     grammar a codeblock is placed before the parsing of the logo statements 
-    inside the REP to add a new AST on top of our AST stack, which then after //TODO: Rewrite
+    inside the REP, which adds a new AST on top of our AST stack, which then after
     the REP is done being parsed is popped back and inserted into the STRep
     instance. This allows for nesting of reps without any hassle.
 
